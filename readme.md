@@ -42,12 +42,12 @@ What this site is already pretty if you follow the mocks :wink: Make sure the fe
 - When a user clicks the share icon they should be able to post that share to the various social medias (Facebook, Twitter, ect) 
 
 ## Requirements
-visualization: 
+  #### Visualization: 
 	- Users can see all public keeps
 	- Anytime a `keep` is viewed or `kept in a vault` the relevant count should go up
 	- Users can manage their keeps and vaults from a dashboard
 	- When hovering over a keep show the three buttons from the bottom overlaid on the image and make them clickable (View, Keep, Share... see below)
-Functionality:
+ #### Functionality:
 	- Users can: 
 		- Register and login 
 		- Be automatically logged on page refresh
