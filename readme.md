@@ -62,10 +62,7 @@ When you are ready to push you site live you can simply run the `npm run build` 
 
 This process will take your files from the **wwwsrc** directory and will minify them and put the minified files into your **wwwroot** directory
 
-This happens because of a change to the **www/config/index.js** as shown here
-
-<img src="www-config-edits.png" style="width: 80%">
-
+This happens because of a change to the **www/config/index.js** changing the build paths to match the path to root as opposed to the default 'dist' file
 
 ### Finished?
 > We only grade the BUILT project. Make sure you test it. When You are finished submit your project to the gradebook
