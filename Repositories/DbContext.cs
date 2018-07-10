@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace keepr_c.Repositories
+namespace Keepr.Repositories
 {
     public abstract class DbContext
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace keepr_c.Controllers
+namespace Keepr.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

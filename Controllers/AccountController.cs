@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using keepr_c.Models;
-using keepr_c.Repositories;
+using Keepr.Models;
+using Keepr.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace keepr_c.Controllers
+namespace Keepr.Controllers
 {
     [Route("[controller]")]
     public class AccountController : Controller

@@ -1,10 +1,10 @@
 using System;
 using System.Data;
-using keepr_c.Models;
+using Keepr.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
 
-namespace keepr_c.Repositories
+namespace Keepr.Repositories
 {
   public class UserRepository : DbContext
   {

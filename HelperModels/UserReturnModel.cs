@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace keepr_c.Models
+namespace Keepr.Models
 {
     public class UserReturnModel
     {

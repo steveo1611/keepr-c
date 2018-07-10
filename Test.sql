@@ -21,12 +21,13 @@
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
-
+-- ADDED isPublic column to track if keep image will be set as private or public.
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(100),
+--      IsPublic TINYINT DEFAULT(1),
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)

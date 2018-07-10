@@ -1,4 +1,4 @@
-namespace keepr_c.Models
+namespace Keepr.Models
 {
     public class LoginUserModel
     {

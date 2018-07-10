@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace keepr_c.Models
+namespace Keepr.Models
 {
     public class RegisterUserModel
     {
