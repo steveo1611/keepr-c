@@ -16,18 +16,32 @@ namespace keepr_c.Repositories
     {
       try
       {
-      // encrypt the password??
-      creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
-      var id = Guid.NewGuid().ToString();
-      //sql
-        _db.ExecuteScalar<string>(@"
-                INSERT INTO users (Id, Username, Email, Password)
-                VALUES (@Id, @Username, @Email, @Password);
-            ", creds);
+        var sql = @"
+      INSERT INTO users (id, Username, Email, Password)
+      VALUES (@Id, @Username, @Email, @Password);
+      ";
+        creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
+        var id = Guid.NewGuid().ToString();
+        _db.ExecuteScalar<string>(sql, new
+        {
+          Id = id,
+          Username = creds.Username,
+          Email = creds.Email,
+          Password = creds.Password
+        });
+
+      // // encrypt the password??
+      // creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
+      //  //var id = " ";
+      // //sql
+      //   _db.ExecuteScalar<string>(@"
+      //           INSERT INTO users (Id, Username, Email, Password)
+      //           VALUES (@Id, @Username, @Email, @Password);
+      //       ", creds);
 
         return new UserReturnModel()
         {
-          Id = id,
+          Id = Guid.NewGuid().ToString(),
           Username = creds.Username,
           Email = creds.Email
         };

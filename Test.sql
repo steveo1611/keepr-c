@@ -8,12 +8,13 @@
 --     PRIMARY KEY (id),
 --     UNIQUE KEY email (email)
 -- );
-
+-- updated userId to match and use varchar same as user table
+-- same changes made to the keeps and vaultkeeps tables
 -- CREATE TABLE vaults (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId int,
+--     userId VARCHAR(100),
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
@@ -25,7 +26,7 @@
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId int,
+--     userId VARCHAR(100),
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
@@ -37,7 +38,7 @@
 --     id int NOT NULL AUTO_INCREMENT,
 --     vaultId int NOT NULL,
 --     keepId int NOT NULL,
---     userId int NOT NULL,
+--     userId VARCHAR(100) NOT NULL,
 
 --     PRIMARY KEY (id),
 --     INDEX (vaultId, keepId),
