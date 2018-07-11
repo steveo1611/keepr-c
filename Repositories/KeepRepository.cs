@@ -15,26 +15,26 @@ namespace Keepr.Repositories
 
     }
     // Create Keep
-    // public Keep CreatePost(Keep newKeep)
-    // {
-    //   int id = _db.ExecuteScalar<int>(@"
-    //             INSERT INTO posts (title, body, authorId)
-    //             VALUES (@Title, @Body, @AuthorId);
-    //             SELECT LAST_INSERT_ID();
-    //         ", newKeep);
-    //   newKeep.Id = id;
-    //   return newKeep;
-    // }
-    // GetAll Post
+    public Keep CreateKeep(Keep newKeep)
+    {
+      int id = _db.ExecuteScalar<int>(@"
+                INSERT INTO keeps (name, description, content, userId)
+                VALUES (@Name, @Description, @Content, @UserId);
+                SELECT LAST_INSERT_ID();
+            ", newKeep);
+      newKeep.Id = id;
+      return newKeep;
+    }
+   // GetAll Post
     public IEnumerable<Keep> GetAll()
     {
       return _db.Query<Keep>("SELECT * FROM Keeps;"); // TODO: need to make  only return public keeps
     }
-    // // GetbyAuthor
-    // public IEnumerable<Post> GetbyAuthorId(int id)
-    // {
-    //   return _db.Query<Post>("SELECT * FROM posts WHERE authorId = @id;", new { id });
-    // }
+    // GetbyUser
+    public IEnumerable<Keep> GetByUserId(string id)
+    {
+      return _db.Query<Keep>("SELECT * FROM keeps WHERE userId = @id;", new { id });
+    }
     // // GetbyId
     // public Post GetbyPostId(int id)
     // {

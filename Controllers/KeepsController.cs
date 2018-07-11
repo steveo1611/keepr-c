@@ -10,38 +10,58 @@ namespace Keepr.Controllers
     public class KeepsController : Controller
     {
         private readonly KeepRepository _db;
-        // GET api/values
+        public KeepsController(KeepRepository repo)
+        {
+            _db = repo;
+        }
+        // GET api/Keep
+        // using to get all keeps to view as unauthenicated etc.
         [HttpGet]
         public IEnumerable<Keep> GetAll()
         {
-             return _db.GetAll();
+            if (ModelState.IsValid)
+            {
+                return _db.GetAll();
+            }
+            return null;
         }
 
-        // GET api/values/5
+        // GET api/Keep/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Authorize]
+        public IEnumerable<Keep> GetByUserId(string id)
         {
-            return "value";
+            if (ModelState.IsValid)
+            {
+                return _db.GetByUserId(id);
+            }
+            return null;
         }
 
-        // POST api/values
+        // POST api/Keep
         [HttpPost]
         [Authorize]
-        public void Post([FromBody] string value)
+        public Keep CreateKeep([FromBody]Keep newKeep)
         {
+            if (ModelState.IsValid)
+            {
+                var user = HttpContext.User;
+                newKeep.UserId = user.Identity.Name;
+                return _db.CreateKeep(newKeep);
+            }
+            return null;
         }
+        // PUT api/Keep/5
+        // [HttpPut("{id}")]
+        // public void Put(int id, [FromBody] string value)
+        // {
+        // }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        // DELETE api/Keep/5
+        // [HttpDelete("{id}")]
+        // public void Delete(int id)
+        // {
+        // }
     }
 
 
