@@ -7,34 +7,33 @@ using Keepr.Controllers;
 
 namespace Keepr.Repositories
 {
-  public class KeepRepository : DbContext
+  public class VaultRepository : DbContext
   {
     
-    public KeepRepository(IDbConnection db) : base(db)
+    public VaultRepository(IDbConnection db) : base(db)
     {
 
     }
-    // Create Keep
-    public Keep CreateKeep(Keep newKeep)
+    // Create Vault
+    public Vault CreateVault(Vault newVault)
     {
       int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO keeps (name, description, content, userId)
-                VALUES (@Name, @Description, @Content, @UserId);
+                INSERT INTO vaults (name, description, userId)
+                VALUES (@Name, @Description, @UserId);
                 SELECT LAST_INSERT_ID();
-            ", newKeep);
-      newKeep.Id = id;
-      return newKeep;
+            ", newVault);
+      newVault.Id = id;
+      return newVault;
     }
-   // GetAll Post
-    public IEnumerable<Keep> GetAll()
-    {
-      //BUG BUG: Need to find way to handle blob types for the images
-      return _db.Query<Keep>("SELECT name, description, userId FROM keeps WHERE IsPublic = 0;"); // TODO: need to make  only return public keeps
-    }
+//    // GetAll Post
+//     public IEnumerable<Vault> GetAll()
+//     {
+//       return _db.Query<Vault>("SELECT * FROM Vaults;"); // TODO: need to make  only return public keeps
+//     }
     // GetbyUser
-    public IEnumerable<Keep> GetByUserId(string id)
+    public IEnumerable<Vault> GetByUserId(string id)
     {
-      return _db.Query<Keep>("SELECT name, description, userId  FROM keeps WHERE userId = @id;", new { id });
+      return _db.Query<Vault>("SELECT * FROM vaults WHERE userId = @id;", new { id });
     }
     // // GetbyId
     // public Post GetbyPostId(int id)
