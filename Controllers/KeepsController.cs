@@ -58,10 +58,10 @@ namespace Keepr.Controllers
         // }
 
         // DELETE api/Keep/5
-        // [HttpDelete("{id}")]
-        // public void Delete(int id)
-        // {
-        // }
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
 
 

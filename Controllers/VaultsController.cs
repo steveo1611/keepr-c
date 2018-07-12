@@ -40,13 +40,13 @@ namespace Keepr.Controllers
             }
             return null;
         }
-        // PUT api/Keep/5
+        // PUT api/Vault/5
         // [HttpPut("{id}")]
         // public void Put(int id, [FromBody] string value)
         // {
         // }
 
-        // DELETE api/Keep/5
+        // DELETE api/Vault/5
         // [HttpDelete("{id}")]
         // public void Delete(int id)
         // {

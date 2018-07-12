@@ -9,8 +9,7 @@ namespace Keepr.Repositories
 {
   public class VaultRepository : DbContext
   {
-    
-    public VaultRepository(IDbConnection db) : base(db)
+        public VaultRepository(IDbConnection db) : base(db)
     {
 
     }
@@ -25,21 +24,16 @@ namespace Keepr.Repositories
       newVault.Id = id;
       return newVault;
     }
-//    // GetAll Post
-//     public IEnumerable<Vault> GetAll()
-//     {
-//       return _db.Query<Vault>("SELECT * FROM Vaults;"); // TODO: need to make  only return public keeps
-//     }
-    // GetbyUser
+    // Get ALL User vaults
     public IEnumerable<Vault> GetByUserId(string id)
     {
       return _db.Query<Vault>("SELECT * FROM vaults WHERE userId = @id;", new { id });
     }
-    // // GetbyId
-    // public Post GetbyPostId(int id)
-    // {
-    //   return _db.QueryFirstOrDefault<Post>("SELECT * FROM posts WHERE id = @id;", new { id });
-    // }
+    // // Get Vault by vault Id
+    public Vault GetbyVaultId(int id)
+    {
+      return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults WHERE id = @id;", new { id });
+    }
     // // Edit
     // public Post EditPost(int id, Post post)
     // {
@@ -56,20 +50,20 @@ namespace Keepr.Repositories
     //   }
     //   return null;
     // }
-    // // Delete
-    // public bool DeletePost(int id)
-    // {
-    //   var i = _db.Execute(@"
-    //   DELETE FROM posts
-    //   WHERE id = @id
-    //   LIMIT 1;
-    //   ", new { id });
-    //   if (i > 0)
-    //   {
-    //     return true;
-    //   }
-    //   return false;
-    // }
+    // Delete
+    public bool DeleteVault(int id)
+    {
+      var i = _db.Execute(@"
+      DELETE FROM vaults
+      WHERE id = @id
+      LIMIT 1;
+      ", new { id });
+      if (i > 0)
+      {
+        return true;
+      }
+      return false;
+    }
 
     // Add get user favs to user
   }
