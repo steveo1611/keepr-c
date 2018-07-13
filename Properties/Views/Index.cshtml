@@ -1,0 +1,16 @@
+@using System.Web.Optimization
+@using Keepr.Controllers
+
+@{
+  ViewBag.Title = "Home Page";
+}
+
+<div id="app">
+  <h3>@ViewBag.Message</h3>
+  {{ vueMessage }}
+</div>
+
+@section scripts {
+    <!-- @Scripts.Render("../../wwwsrc/src/main.js") -->
+  @Scripts.Render("~/.../wwwsrc/src/main.js")
+}

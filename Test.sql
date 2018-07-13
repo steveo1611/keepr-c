@@ -29,9 +29,9 @@
 --     description VARCHAR(255) NOT NULL,
 --     contentURL TEXT,
 --     userId VARCHAR(100),
---     IsPublic TINYINT DEFAULT(0),
---     viewed INT DEFAULT(0),
---     inVault INT DEFAULT(0), 
+--     IsPublic TINYINT DEFAULT 0,
+--     viewed INT DEFAULT 0,
+--     inVault INT DEFAULT 0, 
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
