@@ -1,6 +1,6 @@
 <template>
     <div class = "home">
-<h1> hoal dude</h1>
+<!-- <h1> hoal dude</h1> -->
 <!-- something NO WORKY HERE No getting the image files URLs-->
       <div class="row public-keeps">
         <div class="card">
