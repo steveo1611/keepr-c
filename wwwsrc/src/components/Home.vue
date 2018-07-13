@@ -1,10 +1,10 @@
 <template>
     <div class = "home">
 <h1> hoal dude</h1>
-
+<!-- something NO WORKY HERE No getting the image files URLs-->
       <div class="row public-keeps">
         <div class="card">
-          <div v-for="keep in publicKeeps" :key="keep.ContentURL">
+          <div v-for="keep in keeps" :key="keep.ContentURL">
               <img class = "card-img-top" :src="keep.ContentURL" >
           </div>
         </div>
@@ -16,30 +16,28 @@
 import router from "../router";
 import login from "./Login";
 
-
 export default {
   name: "Home",
   data() {
     return {
-        keep: {
-        name: '',
-        description: '',
-        contentURL: ''
-        },
+      keep: {
+        name: "",
+        description: "",
+        contentURL: ""
+      }
     };
   },
   components: {},
   computed: {
-    monitorKeeps() {
-        console.log("drum" + this.$store.state.setKeeps)
-      return this.$store.state.setKeeps;
+    keeps() {
+      return this.$store.state.keeps;
     }
   },
   mounted() {
     //    if (!this.$store.state.user) {
     // if no user id kick to the Login page
     // router.push({ name: "User" }); //
-    // this.$store.dispatch('getKeeps')
+    this.$store.dispatch("getKeeps");
   },
 
   methods: {

@@ -1,5 +1,5 @@
 
--- NOTE: made change: changed id type from int to varchar
+--  -- NOTE: made change: changed id type from int to varchar
 -- CREATE TABLE users (
 --     id VARCHAR(100) NOT NULL, 
 --     username VARCHAR(20) NOT NULL,
@@ -8,8 +8,8 @@
 --     PRIMARY KEY (id),
 --     UNIQUE KEY email (email)
 -- );
--- NOTES: updated userId to match and use varchar same as user table
--- NOTES: same changes made to the keeps and vaultkeeps tables
+-- -- NOTES: updated userId to match and use varchar same as user table
+-- -- NOTES: same changes made to the keeps and vaultkeeps tables
 -- CREATE TABLE vaults (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
@@ -21,8 +21,8 @@
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
--- NOTE: ADDED isPublic column to track if keep image will be set as private or public.
--- NOTE: added viewed and inVault columns with defaults of 0
+-- -- NOTE: ADDED isPublic column to track if keep image will be set as private or public.
+-- -- NOTE: added viewed and inVault columns with defaults of 0
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,

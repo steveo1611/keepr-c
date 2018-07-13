@@ -19,18 +19,18 @@ export default new vuex.Store({
       user: {},
       keeps: {},
       newkeeps: {},
-      setKeeps:[]
+      setKeeps: []
     }
   },
   mutations: {
     setUser(state, user) {
-      state.user = user
+      state.user = user;
     },
     setKeeps(state, keeps) {
-      state.keeps = keeps
+      state.keeps = keeps;
     },
     setnewKeeps(state, keeps) {
-      state.keeps = keeps
+      state.keeps = keeps;
     }
   },
   actions: {
@@ -38,7 +38,7 @@ export default new vuex.Store({
       server
         .post("/account/login", payload)
         .then(user => {
-         router.push("/");
+          router.push("/");
           commit("setUser", user);
         })
         .catch(res => {
@@ -61,8 +61,6 @@ export default new vuex.Store({
         .get("/account/authenticate")
         .then(res => {
           commit("setUser", res.data.data);
-
-       //  router.push("/");
         })
         .catch(res => {
           console.log(res);
@@ -79,26 +77,27 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
-    getKeeps({dispatch, commit, state}) {
-      server.get('/api/keeps')
-           .then(res => {
-            console.log("query" + res.data)
-        commit('setKeeps', res.data);
-      })
-      .catch(res => {
-        console.log(res.data);
-      });
+    getKeeps({ dispatch, commit, state }) {
+      server
+        .get("/api/keeps")
+        .then(res => {
+          console.log("query" + res.data);
+          commit("setKeeps", res.data);
+        })
+        .catch(res => {
+          console.log(res.data);
+        });
     },
-    createKeeps({dispatch, commit, state}, payload) {
-      server.post('/api/keeps', payload)
-      .then(res => {
-       // console.log(payload)
-        commit('setnewKeeps', res);
-      })
-      .catch(res => {
-        console.log(res.data);
-      })
-    
-    },
+    createKeeps({ dispatch, commit, state }, payload) {
+      server
+        .post("/api/keeps", payload)
+        .then(res => {
+          // console.log(payload)
+          commit("setnewKeeps", payload);
+        })
+        .catch(res => {
+          console.log(res.data);
+        });
+    }
   }
 });
