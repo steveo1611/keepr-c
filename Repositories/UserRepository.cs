@@ -30,15 +30,6 @@ namespace Keepr.Repositories
           Password = creds.Password
         });
 
-      // // encrypt the password??
-      // creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
-      //  //var id = " ";
-      // //sql
-      //   _db.ExecuteScalar<string>(@"
-      //           INSERT INTO users (Id, Username, Email, Password)
-      //           VALUES (@Id, @Username, @Email, @Password);
-      //       ", creds);
-
         return new UserReturnModel()
         {
           Id = Guid.NewGuid().ToString(),

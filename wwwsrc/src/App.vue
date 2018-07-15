@@ -1,25 +1,30 @@
 <template>
   <div id="app">
         <nav class="navbar navbar-dark bg-primary top-header format">
-        <a href="#" class="navbar-left">
+        <div>
+          <img src="./assets/logo.png">
         <router-link :to="{ name: 'Home'}" class="navbar-brand">
-            <a>Home</a>
+         <a>Home</a>
         </router-link>
-        <!-- need to only allow this for authenicated useers -->
-        <a class="navbar-brand" @click="keeps" v-if="!(user)"><button type="button" class="btn btn-outline-light">Create keeps</button></a>
-        <a class="navbar-brand" @click="vaults" v-if="!(user)"><button type="button" class="btn btn-outline-light">Create Vaults</button></a>
-       </a>
- <!-- need to have button only appear when not logged in already -->
-        <a class="navbar-brand" @click="login" v-if="!(user)"><button type="button" class="btn btn-outline-light">Sign In/Login</button></a>
+        <span v-if="user">
+          <router-link :to="{ name: 'Vaults'}" class="navbar-brand">
+            <a>Create Vaults</a>
+          </router-link>
+          <router-link :to="{ name: 'Keeps'}" class="navbar-brand">
+            <a>Create Keep</a>
+          </router-link>
+        </span>
+        </div>
+         <!-- need to have button only appear when not logged in already -->
+        <a class="navbar-brand" @click="login" v-if="!(user)">
+        <button type="button" class="btn btn-outline-light">Sign In/Register</button>
+        </a>
       <div v-if="user" class="d-flex flex-column">
-        <a class="navbar-brand">User: {{user.userName}}</a>
+        <a class="navbar-brand">User: {{user.username}}</a>
         <a class="navbar-brand btn btn-outline-light" @click="signOut">Sign out</a>
       </div>
     </nav>
-    
-  <!--  <h1> Hello Heaven</h1> -->
     <router-view/>
-
   </div>
 </template>
 
@@ -36,6 +41,9 @@ export default {
   },
 
   methods: {
+    home() {
+      this.$route.push({ name: "Home"})
+    },
     login() {
       this.$router.push({ name: "User" });
     },

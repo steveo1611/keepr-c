@@ -4,6 +4,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Keepr.Models;
 using Keepr.Repositories;
+using System;
+using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +62,14 @@ namespace Keepr.Controllers
             //        .Select(c => c.Value).SingleOrDefault();
             return _db.GetUserById(id);
         }
+
+        [HttpDelete("logout")]
+        public UserReturnModel Logout()
+        {
+            return null;
+        }
+
+
 
         [Authorize]
         [HttpPut]

@@ -1,11 +1,10 @@
 <template>
     <div class = "home">
-<!-- <h1> hoal dude</h1> -->
-<!-- something NO WORKY HERE No getting the image files URLs-->
       <div class="row public-keeps">
+        <div v-for="keep in keeps" class="col-sm-3">
         <div class="card">
-          <div v-for="keep in keeps" :key="keep.ContentURL">
-              <img class = "card-img-top" :src="keep.ContentURL" >
+              <!-- <img class = "card-img-top" :src="'https://bcw-getter.herokuapp.com/?url=' + keep.contentURL"> NOTE: need to rig something like this for me-->  
+              <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
           </div>
         </div>
       </div>

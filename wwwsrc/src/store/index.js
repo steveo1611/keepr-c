@@ -15,12 +15,9 @@ var server = axios.create({
 
 export default new vuex.Store({
   state: {
-    state: {
-      user: {},
-      keeps: {},
-      newkeeps: {},
-      setKeeps: []
-    }
+    user: {},
+    keeps: [],
+    vaults: [],
   },
   mutations: {
     setUser(state, user) {
@@ -29,8 +26,8 @@ export default new vuex.Store({
     setKeeps(state, keeps) {
       state.keeps = keeps;
     },
-    setnewKeeps(state, keeps) {
-      state.keeps = keeps;
+    setVaults(state, vaults) {
+      state.vaults = vaults;
     }
   },
   actions: {
@@ -60,7 +57,7 @@ export default new vuex.Store({
       server
         .get("/account/authenticate")
         .then(res => {
-          commit("setUser", res.data.data);
+          commit("setUser", res.data);
         })
         .catch(res => {
           console.log(res);
@@ -68,10 +65,10 @@ export default new vuex.Store({
     },
     signOut({ commit, dispatch, state }) {
       server
-        .delete("/logout")
+        .delete("/account/logout")
         .then(res => {
           commit("setUser", {});
-          router.push({ name: "User" });
+          router.push({ name: "Home" });
         })
         .catch(res => {
           console.log(res.data);
@@ -81,7 +78,6 @@ export default new vuex.Store({
       server
         .get("/api/keeps")
         .then(res => {
-          console.log("query" + res.data);
           commit("setKeeps", res.data);
         })
         .catch(res => {
@@ -93,11 +89,29 @@ export default new vuex.Store({
         .post("/api/keeps", payload)
         .then(res => {
           // console.log(payload)
-          commit("setnewKeeps", payload);
+          commit("setKeeps", payload);
         })
         .catch(res => {
           console.log(res.data);
         });
+    },
+    getVaults({ dispatch, commit, state }) {
+      server.get('/api/vaults/' + state.user._id)
+      .then(res => {
+        commit('setVaults', res.data)
+      })
+      .catch(res => {
+        console.log(res.data);
+      });
+    },
+    createVault({ dispatch, commit}, payload) {
+      server.post('/api/vaults', payload)
+      .then(res => {
+        commit('setVaults', payload);
+      })
+      .catch(res => {
+        console.log(res.data);
+      });
     }
   }
 });

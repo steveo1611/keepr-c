@@ -7,7 +7,7 @@
           <form v-on:submit.prevent="addKeeps" class="form">
             <input class="input" type="text" name="name" placeholder=" Name" id="name" v-model="keep.name">
               <input class="input" type="text" name="description" placeholder=" Description" id="description" v-model="keep.description">
-              <input class="input" type="text" name="contentURL" placeholder=" contentURL" id="contentURL" v-model="keep.contentURL">
+              <input class="input" type="url" name="contentURL" placeholder=" contentURL" id="contentURL" v-model="keep.contentURL">
                 <button class="btn btn-primary btn-success" type="submit">submit</button>
           </form>
           </div>
