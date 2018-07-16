@@ -17,8 +17,8 @@ namespace Keepr.Repositories
         public Keep CreateKeep(Keep newKeep)
         {
             int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO keeps (name, description, contentURL, userId)
-                VALUES (@Name, @Description, @ContentURL, @UserId);
+                INSERT INTO keeps (name, description, contentURL, userId, isPublic)
+                VALUES (@Name, @Description, @ContentURL, @UserId, @IsPublic);
                 SELECT LAST_INSERT_ID();
             ", newKeep);
             newKeep.Id = id;
@@ -27,7 +27,7 @@ namespace Keepr.Repositories
         // GetAll keeps
         public IEnumerable<Keep> GetAll()
         {
-            return _db.Query<Keep>("SELECT * FROM keeps WHERE IsPublic = 0;");
+            return _db.Query<Keep>("SELECT * FROM keeps WHERE IsPublic = 1;");
         }
         // GetbyUser
         public IEnumerable<Keep> GetByUserId(string id)

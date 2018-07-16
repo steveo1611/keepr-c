@@ -17,7 +17,7 @@ export default new vuex.Store({
   state: {
     user: {},
     keeps: [],
-    vaults: [],
+    vaults: []
   },
   mutations: {
     setUser(state, user) {
@@ -25,7 +25,7 @@ export default new vuex.Store({
     },
     setKeeps(state, keeps) {
       state.keeps = keeps;
-    },
+      },
     setVaults(state, vaults) {
       state.vaults = vaults;
     }
@@ -95,23 +95,35 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
-    getVaults({ dispatch, commit, state }) {
-      server.get('/api/vaults/' + state.user._id)
-      .then(res => {
-        commit('setVaults', res.data)
-      })
-      .catch(res => {
-        console.log(res.data);
-      });
+    usercreatedkeeps({ dispatch, commit, state }) {
+      server
+        .get("/api/keeps/" + state.user.id)
+        .then(res => {
+          commit("setKeeps", res.data);
+        })
+        .catch(res => {
+          console.log(res.data);
+        });
     },
-    createVault({ dispatch, commit}, payload) {
-      server.post('/api/vaults', payload)
-      .then(res => {
-        commit('setVaults', payload);
-      })
-      .catch(res => {
-        console.log(res.data);
-      });
+    getVaults({ dispatch, commit, state }) {
+      server
+        .get("/api/vaults/" + state.user.id)
+        .then(res => {
+          commit("setVaults", res.data);
+        })
+        .catch(res => {
+          console.log(res.data);
+        });
+    },
+    createVault({ dispatch, commit }, payload) {
+      server
+        .post("/api/vaults", payload)
+        .then(res => {
+          commit("setVaults", payload);
+        })
+        .catch(res => {
+          console.log(res.data);
+        });
     }
   }
 });

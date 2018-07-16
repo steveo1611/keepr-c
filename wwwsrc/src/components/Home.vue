@@ -1,7 +1,7 @@
 <template>
     <div class = "home">
       <div class="row public-keeps">
-        <div v-for="keep in keeps" class="col-sm-3">
+        <div v-for="keep in keeps" class="col-sm-3" :key="keep.name">
         <div class="card">
               <!-- <img class = "card-img-top" :src="'https://bcw-getter.herokuapp.com/?url=' + keep.contentURL"> NOTE: need to rig something like this for me-->  
               <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
@@ -13,7 +13,7 @@
 
 <script>
 import router from "../router";
-import login from "./Login";
+import login from "./login";
 
 export default {
   name: "Home",

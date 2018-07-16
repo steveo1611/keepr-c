@@ -1,7 +1,7 @@
 <template>
 <div class="user bgImg">
     <div class="row justify-content-center">
-      <div class="col-6 card">
+      <div class="col-12 card">
         <div class="keeps">
           <h1>Add Keeps</h1>
           <form v-on:submit.prevent="addKeeps" class="form">
@@ -9,45 +9,73 @@
               <input class="input" type="text" name="description" placeholder=" Description" id="description" v-model="keep.description">
               <input class="input" type="url" name="contentURL" placeholder=" contentURL" id="contentURL" v-model="keep.contentURL">
                 <button class="btn btn-primary btn-success" type="submit">submit</button>
+                <div>
+                <input type="checkbox" id="privatecheckbox" v-model="keep.isPublic">
+                <label for="checkbox">Marked as public</label>
+                </div>
           </form>
+          </div>
+          </div>
+          <div class="container-fluid">
+          <div class="row personal-keeps justify-content-center">
+            <div class="col-sm-12">
+            <h1>Users Keeps</h1>
+            <div class="card-deck"></div>
+            <div v-for="keep in keeps" :key="keep.name">
+            <div class="card p-3">
+              <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
+              <h3>{{keep.name}}</h3>
+              <p>{{keep.description}}</p>            
+            </div>
+            </div>
+            </div>
+            </div>
           </div>
         </div>
       </div>
 </div>
 </template>
+
 <script>
 export default {
   name: "keep",
-  mounted() {
-    this.$store.dispatch('authenticate');
-  },
   data() {
     return {
-        keep: {
-        name: '',
-        description: '',
-        contentURL: ''
-        },
+      keep: {
+        name: "",
+        description: "",
+        contentURL: "",
+        isPublic: 1
+      },
       showKeeps: true
     };
   },
+    mounted() {
+    this.$store.dispatch("authenticate");
+    this.$store.dispatch("usercreatedkeeps");
+},
   computed: {
     currentUser() {
-      return this.$store.state.user
+      return this.$store.state.user;
     },
-    createKeeps(){
-      return this.$store.state.keep
+    // createKeeps() {
+    //   return this.$store.state.keep;
+    // },
+    keeps() {
+      return this.$store.state.keeps;
     }
   },
   methods: {
     toggle() {
-      this.showKeeps = !this.showKeeps
+      this.showKeeps = !this.showKeeps;
     },
-    addKeeps(){
+    addKeeps() {
       this.$store.dispatch("createKeeps", this.keep);
+    },
+    getUserKeeps() {
+      this.$store.dispatch("usercreatedkeeps", this.keep);
     }
   }
-
 };
 </script>
 <style>

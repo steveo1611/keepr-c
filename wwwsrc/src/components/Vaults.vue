@@ -10,6 +10,13 @@
             <button class="btn btn-primary btn-success" type="submit">Create</button>
           </form>
           </div>
+          <div>
+            <h2>Vault List</h2>
+             <div v-for="vault in vaults" class="col-sm-3" :key="vault.name">
+               <p>{{vault.name}}</p>
+               <p>{{vault.description}}</p>
+          </div>
+          </div>
         </div>
       </div>
 </div>
@@ -21,6 +28,8 @@
 </template>
 <!-- will use this space to create the vault dashboards -->
 <script>
+import router from '../router';
+import login from './login';
 
 export default {
   name: "Vaults",
@@ -33,18 +42,26 @@ export default {
       }
     }
   },
+mounted() {
+  this.$store.dispatch("authenticate");
+  this.$store.dispatch("getVaults");
+},
+
   components: {},
   computed: {
     currentUser() {
       return this.$store.state.user
     },
-    createVault(){
-      return this.$store.dispatch("createVault", this.vault);
+    vaults(){
+      return this.$store.state.vaults;
     }
   },
   methods: {
     addVault(){
       this.$store.dispatch("createVault", this.vault);
+    },
+    userVaults(){
+      this.$store.dispatch("getVaults", this.vaults);
     }
   }
 };

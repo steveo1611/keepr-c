@@ -8,10 +8,10 @@
         </router-link>
         <span v-if="user">
           <router-link :to="{ name: 'Vaults'}" class="navbar-brand">
-            <a>Create Vaults</a>
+            <a>Manage Vaults</a>
           </router-link>
           <router-link :to="{ name: 'Keeps'}" class="navbar-brand">
-            <a>Create Keep</a>
+            <a>Manage Keeps</a>
           </router-link>
         </span>
         </div>

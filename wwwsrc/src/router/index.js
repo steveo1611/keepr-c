@@ -1,33 +1,33 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "@/components/Home";
-import User from "@/components/Login";
-import Keeps from "@/components/Keeps";
-import Vaults from "@/components/Vaults";
+import vue from "vue";
+import router from "vue-router";
+import home from "@/components/home";
+import user from "@/components/login";
+import keeps from "@/components/keeps";
+import vaults from "@/components/vaults";
 
-Vue.use(Router);
+vue.use(router);
 
-export default new Router({
+export default new router({
   routes: [
     {
       path: "/",
       name: "Home",
-      component: Home
+      component: home
     },
     {
       path: "/login",
       name: "User",
-      component: User
+      component: user
     },
     {
       path: "/keeps",
       name: "Keeps",
-      component: Keeps
+      component: keeps
     },
     {
       path: "/vaults",
       name: "Vaults",
-      component: Vaults
+      component: vaults
     }
   ]
 });
