@@ -9,12 +9,12 @@ namespace Keepr.Repositories
 {
     public class VaultKeepRepository : DbContext
     {
-        public  VaultKeepRepository(IDbConnection db) : base(db)
+        public VaultKeepRepository(IDbConnection db) : base(db)
         {
 
         }
-        // Create vaultkeep
-        public VaultKeeps CreateVK(VaultKeeps newvk)
+        //AddKeep vaultkeep
+        public VaultKeeps AddVK(VaultKeeps newvk)
         {
             int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO vaultkeeps (vaultId, keepId, userId)
@@ -25,15 +25,23 @@ namespace Keepr.Repositories
             return newvk;
         }
         // GetAll vaultkeeps
-        public IEnumerable<VaultKeeps> GetAll()
-        {
-            return _db.Query<VaultKeeps>("SELECT * FROM keeps WHERE IsPublic = 1;");
-        }
+        // public IEnumerable<VaultKeeps> GetAll()
+        // {
+        //     return _db.Query<VaultKeeps>("SELECT * FROM keeps WHERE IsPublic = 1;");
+        // }
         // GetbyUser
-        public IEnumerable<VaultKeeps> GetByUserId(string id)
+        public IEnumerable<VaultKeeps> GetByVaultId(string id)
         {
-            return _db.Query<VaultKeeps>("SELECT *  FROM keeps WHERE userId = @id;", new { id });
+            return _db.Query<VaultKeeps>(@"
+            SELECT * FROM vaultkeeps vk
+            INNER JOIN keeps k on k.id = vk.keepId
+            WHERE (vaultId = @id);
+            ", new { id });
         }
+        // USE THIS LINE FOR GET KEEPS BY VAULTID
+        //-- SELECT* FROM vaultkeeps vk
+        //-- INNER JOIN keeps k ON k.id = vk.keepId
+        //-- WHERE (vaultId = 2)
 
         // Delete
         public bool DeleteVK(int id)

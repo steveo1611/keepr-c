@@ -32,6 +32,10 @@
             </div>
           </div>
         </div>
+        <!-- <div @mouseover="upHere = true" @mouseleave="upHere = false" >
+    <h2> Something Something </h2>
+    <some-component v-show="upHere"></some-component>
+</div> -->
       </div>
 </div>
 </template>
@@ -47,13 +51,14 @@ export default {
         contentURL: "",
         isPublic: 1
       },
-      showKeeps: true
+      showKeeps: true,
+      upHere: false
     };
   },
-    mounted() {
+  mounted() {
     this.$store.dispatch("authenticate");
     this.$store.dispatch("usercreatedkeeps");
-},
+  },
   computed: {
     currentUser() {
       return this.$store.state.user;

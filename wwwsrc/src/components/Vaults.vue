@@ -12,60 +12,59 @@
           </div>
           <div>
             <h2>Vault List</h2>
-             <div v-for="vault in vaults" class="col-sm-3" :key="vault.name">
-               <p>{{vault.name}}</p>
-               <p>{{vault.description}}</p>
+             <div v-for="vault in vaults" class="col-sm-12" :key="vault.name">
+               <p>NAME: {{vault.name}}  </p>
+              <p>Description: {{vault.description}} </p>
           </div>
           </div>
         </div>
       </div>
 </div>
 
-
-
-
-
 </template>
 <!-- will use this space to create the vault dashboards -->
 <script>
-import router from '../router';
-import login from './login';
+import router from "../router";
+import login from "./login";
 
 export default {
   name: "Vaults",
   data() {
-    return{
+    return {
       vault: {
-        name: '',
-        description: '',
-        userId: '' 
+        name: "",
+        description: "",
+        userId: ""
       }
-    }
+    };
   },
-mounted() {
-  this.$store.dispatch("authenticate");
-  this.$store.dispatch("getVaults");
-},
+  mounted() {
+    this.$store.dispatch("authenticate");
+    this.$store.dispatch("getVaults");
+  },
 
   components: {},
   computed: {
     currentUser() {
-      return this.$store.state.user
+      return this.$store.state.user;
     },
-    vaults(){
+    vaults() {
       return this.$store.state.vaults;
     }
   },
   methods: {
-    addVault(){
+    addVault() {
       this.$store.dispatch("createVault", this.vault);
     },
-    userVaults(){
+    userVaults() {
       this.$store.dispatch("getVaults", this.vaults);
     }
   }
 };
 </script>
 <style>
+h2 {
+  margin-top: 2rem;
+}
 </style>
 

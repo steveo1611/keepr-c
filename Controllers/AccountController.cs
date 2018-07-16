@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Keepr.Controllers
 {
     [Route("[controller]")]
@@ -63,10 +64,10 @@ namespace Keepr.Controllers
             return _db.GetUserById(id);
         }
 
-        [HttpDelete("logout")]
-        public UserReturnModel Logout()
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
         {
-            return null;
+            return RedirectToAction(nameof(this.Login), "Account");
         }
 
 

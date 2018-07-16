@@ -16,45 +16,46 @@ namespace Keepr.Controllers
         }
         // GET api/vk
         // using to get all keeps to view as unauthenicated etc.
-        [HttpGet]
-        public IEnumerable<VaultKeeps> GetAll()
-        {
-            if (ModelState.IsValid)
-            {
-                return _db.GetAll();
-            }
-            return null;
-        }
+        // [HttpGet]
+        // public IEnumerable<VaultKeeps> GetAll()
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         return _db.GetAll();
+        //     }
+        //     return null;
+        // }
 
         // GET api/Keep/5
         [HttpGet("{id}")]
         [Authorize]
-        public IEnumerable<VaultKeeps> GetByUserId(string id)
+        public IEnumerable<VaultKeeps> GetByVaultId(string id)
         {
             if (ModelState.IsValid)
             {
-                return _db.GetByUserId(id);
+                return _db.GetByVaultId(id);
             }
             return null;
         }
 
-        // POST api/Keep
+        // POST api/vk
         [HttpPost]
         [Authorize]
-        public VaultKeeps CreateVK([FromBody]VaultKeeps newVK)
+        public VaultKeeps AddVK([FromBody]VaultKeeps newVK)
         {
             if (ModelState.IsValid)
             {
                 var user = HttpContext.User;
                 newVK.userId = user.Identity.Name;
-                return _db.CreateVK(newVK);
+                return _db.AddVK(newVK);
             }
             return null;
         }
- 
+
 
         // DELETE api/VK/5
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(int id)
         {
         }

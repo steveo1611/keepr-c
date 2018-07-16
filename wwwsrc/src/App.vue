@@ -16,10 +16,10 @@
         </span>
         </div>
          <!-- need to have button only appear when not logged in already -->
-        <a class="navbar-brand" @click="login" v-if="!(user)">
+        <a class="navbar-brand" @click="login" v-if="!(user.username)">
         <button type="button" class="btn btn-outline-light">Sign In/Register</button>
         </a>
-      <div v-if="user" class="d-flex flex-column">
+      <div v-if="user.username" class="d-flex flex-column">
         <a class="navbar-brand">User: {{user.username}}</a>
         <a class="navbar-brand btn btn-outline-light" @click="signOut">Sign out</a>
       </div>
@@ -42,7 +42,7 @@ export default {
 
   methods: {
     home() {
-      this.$route.push({ name: "Home"})
+      this.$route.push({ name: "Home" });
     },
     login() {
       this.$router.push({ name: "User" });

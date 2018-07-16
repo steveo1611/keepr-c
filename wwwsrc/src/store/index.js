@@ -17,7 +17,8 @@ export default new vuex.Store({
   state: {
     user: {},
     keeps: [],
-    vaults: []
+    vaults: [],
+    vaultKeep: []
   },
   mutations: {
     setUser(state, user) {
@@ -25,9 +26,12 @@ export default new vuex.Store({
     },
     setKeeps(state, keeps) {
       state.keeps = keeps;
-      },
+    },
     setVaults(state, vaults) {
       state.vaults = vaults;
+    },
+    setvaultKeep(state, vaultKeep) {
+      state.vaultKeep = vaultKeep;
     }
   },
   actions: {
@@ -63,11 +67,11 @@ export default new vuex.Store({
           console.log(res);
         });
     },
-    signOut({ commit, dispatch, state }) {
+    signOut({ commit, dispatch, state }, payload) {
       server
-        .delete("/account/logout")
+        .post("/account/logout")
         .then(res => {
-          commit("setUser", {});
+          // commit("setUser", payload);
           router.push({ name: "Home" });
         })
         .catch(res => {
@@ -120,6 +124,16 @@ export default new vuex.Store({
         .post("/api/vaults", payload)
         .then(res => {
           commit("setVaults", payload);
+        })
+        .catch(res => {
+          console.log(res.data);
+        });
+    },
+    addVK({ dispatch, commit }, payload) {
+      server
+        .post("/api/vk/", payload)
+        .then(res => {
+          commit("setvaultKeep", payload);
         })
         .catch(res => {
           console.log(res.data);
