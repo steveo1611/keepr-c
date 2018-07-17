@@ -64,10 +64,13 @@ namespace Keepr.Controllers
             return _db.GetUserById(id);
         }
 
+        [Authorize]
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        //[HttpDelete("{id}")]
+        public async Task<string> Logout()
         {
-            return RedirectToAction(nameof(this.Login), "Account");
+            await HttpContext.SignOutAsync();
+            return "successful log out";
         }
 
 

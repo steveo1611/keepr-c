@@ -1,9 +1,9 @@
 <template>
-<div class="vaults bgImg">
+<div class="vaults">
     <div class="row justify-content-center">
       <div class="col-6 card">
         <div class="vault">
-          <h1>Add Vaults</h1>
+          <h1>Create Vaults</h1>
           <form v-on:submit.prevent="addVault" class="form">
             <input class="input" type="text" name="name" placeholder=" Name" id="name" v-model="vault.name">
             <input class="input" type="text" name="description" placeholder=" Description" id="description" v-model="vault.description">

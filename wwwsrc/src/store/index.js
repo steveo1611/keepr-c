@@ -67,7 +67,7 @@ export default new vuex.Store({
           console.log(res);
         });
     },
-    signOut({ commit, dispatch, state }, payload) {
+    logOut({ commit, dispatch, state }, payload) {
       server
         .post("/account/logout")
         .then(res => {

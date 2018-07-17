@@ -1,5 +1,5 @@
 <template>
-  <div class="user bgImg">
+  <div class="user">
     <div class="row justify-content-center">
       <div class="col-6 card">
         <div class="login" v-if="showLogin">
@@ -11,7 +11,7 @@
               </form>
               <br>
               <p class="user">
-                Not a user?
+                Create Account:
                 <em @click="toggle">
                   <button type="button" class="btn btn-danger">Register</button>
                 </em>
@@ -24,7 +24,7 @@
               <input class="input" type="text" name="name" placeholder="name" id="name" v-model="user.UserName">
                 <input class="input" type="password" name="password" placeholder="password" id="name" v-model="user.password">
                   <button class="btn btn-primary btn-danger" type="submit">Register</button>
-                </form>
+            </form>
           <br>
             <div>
             </div>

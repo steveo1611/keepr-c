@@ -1,5 +1,5 @@
 <template>
-<div class="user bgImg">
+<div class="user">
     <div class="row justify-content-center">
       <div class="col-12 card">
         <div class="keeps">
@@ -36,8 +36,8 @@
     <h2> Something Something </h2>
     <some-component v-show="upHere"></some-component>
 </div> -->
-      </div>
-</div>
+  </div>
+  
 </template>
 
 <script>
