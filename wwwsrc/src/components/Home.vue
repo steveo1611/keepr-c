@@ -1,23 +1,26 @@
 <template>
     <div class = "home">
       <div class="row public-keeps">
-        <div v-for="keep in keeps" class="col-sm-3" :key="keep.name">
+        <div v-for="keep in keeps" class="col-sm-3">
         <div class="card">
               <!-- <img class = "card-img-top" :src="'https://bcw-getter.herokuapp.com/?url=' + keep.contentURL"> NOTE: need to rig something like this for me-->  
               <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'"> 
                <!-- changed name of initial src file due to cors issues -->
              
+              <span v-if="user">
               <vaults v-show="false"></vaults>
-               <span v-if="user">
-               <button class="btn btn-primary btn-success" v-on:click.prevent="showDropDown=!showDropDown" type="submit">Add to Vault</button>
+               <button class="btn btn-primary btn-success" v-on:click.prevent="showDropDown=!showDropDown" type="submit">Select Vault</button>
                 
                 <div class="vaultlist" v-if="showDropDown">
-                <select v-model="vault">
-                  <option v-for="vault in vaults">{{vault.name}}</option>
+                <select v-model="vault.id">
+                  <option>choose a vault</option>
+                  <option v-for="vault in vaults" :key="vault.id">{{vault.name}}</option>
 
                 </select>
+                <button class="btn btn-primary btn-success" v-on:click.prevent="addtoVault" type="submit">Add to Vault</button>
+                </div>
                 <!-- <span>Selected: {{ selected }}</span> -->
-               </div>
+         <!-- </div> -->
                
                <button class="btn btn-primary btn-success" v-on:submit.prevent="view" type="submit">View</button>
                <button class="btn btn-primary btn-success" v-on:submit.prevent="share" type="submit">Share Keep</button>
@@ -43,13 +46,15 @@ export default {
         contentURL: ""
       },
       vault: {
+        id: 0,
         name: "",
         description: "",
         userId: ""
       },
-      selected: '',
+      selected: "",
       showDropDown: true,
-      vaultlist: null
+      vaultlist: "",
+      vaultKeeps: {}
     };
   },
   components: {
@@ -63,9 +68,9 @@ export default {
     keeps() {
       return this.$store.state.keeps;
     },
-      user() {
+    user() {
       return this.$store.state.user;
-    },    
+    },
     vaults() {
       return this.$store.state.vaults;
     }
@@ -74,15 +79,10 @@ export default {
     publicKeeps() {
       this.$store.dispatch(getKeeps, this.keep);
     },
-    addtoVault(vaultId) {
-      this.$store.dispatch(addVK, this.vault._id);  //made some changes to add id, not sure if valid
+    addtoVault() {
+      console.log("add2V" + this.vault.id);
+      this.$store.dispatch(addVK, this.vault.id); //made some changes to add id, not sure if valid
     }
-    // view() {
-    //   this.$store.dispatch(viewKeep, this.vault);
-    // },
-    // share() {
-    //   this.$store.dispatch(addVK, this.vault);
-    // }
   }
 };
 </script>

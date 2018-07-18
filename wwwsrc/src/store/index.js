@@ -129,7 +129,8 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
-    addVK({ dispatch, commit }, payload) {
+    addVault({ dispatch, commit, store }, payload) {
+      console.log(payload);
       server
         .post("/api/vk/", payload)
         .then(res => {

@@ -32,10 +32,7 @@
             </div>
           </div>
         </div>
-        <!-- <div @mouseover="upHere = true" @mouseleave="upHere = false" >
-    <h2> Something Something </h2>
-    <some-component v-show="upHere"></some-component>
-</div> -->
+
   </div>
   
 </template>

@@ -34,7 +34,8 @@ export default {
       vault: {
         name: "",
         description: "",
-        userId: ""
+        userId: "",
+        vaultId: ""
       }
     };
   },
