@@ -18,7 +18,9 @@ export default new vuex.Store({
     user: {},
     keeps: [],
     vaults: [],
-    vaultKeep: []
+    vaultKeep: [],
+     keepView: {},
+     vcount: 0
   },
   mutations: {
     setUser(state, user) {
@@ -32,6 +34,9 @@ export default new vuex.Store({
     },
     setvaultKeep(state, vaultKeep) {
       state.vaultKeep = vaultKeep;
+    },
+    setviewCount(state, vcount) {
+      state.vcount = vcount;
     }
   },
   actions: {
@@ -76,6 +81,17 @@ export default new vuex.Store({
         })
         .catch(res => {
           console.log(res.data);
+        });
+    },
+    setviewKeep({ commit, dispatch, state }, payload) {
+      server
+        .put("/api/keeps/" + payload)
+        .then(res => {
+          commit("setviewCount", payload);
+          router.push({ name: "keepview" });
+        })
+        .catch(res => {
+          console.log(res);
         });
     },
     getKeeps({ dispatch, commit, state }) {
@@ -129,7 +145,7 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
-    addVault({ dispatch, commit, store }, payload) {
+    addVK({ dispatch, commit, store }, payload) {
       console.log(payload);
       server
         .post("/api/vk/", payload)
@@ -139,6 +155,12 @@ export default new vuex.Store({
         .catch(res => {
           console.log(res.data);
         });
+    },
+    clearResults({ dispatch, commit }) {
+      commit("setKeeps", []);
+      commit("setVaults", []);
+      commit("setvaultKeep", []);
+      // commit('setsomething else', [])
     }
   }
 });

@@ -14,18 +14,38 @@
                 <label for="checkbox">Marked as public</label>
                 </div>
           </form>
-          </div>
-          </div>
-          <div class="container-fluid">
+        </div>
+      </div>
+        <div class="container-fluid">
           <div class="row personal-keeps justify-content-center">
+            <vaults v-show="false"></vaults>
             <div class="col-sm-12">
             <h1>Users Keeps</h1>
             <div class="card-deck"></div>
             <div v-for="keep in keeps" :key="keep.name">
+
             <div class="card p-3">
               <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
               <h3>{{keep.name}}</h3>
-              <p>{{keep.description}}</p>            
+              <p>{{keep.description}}</p> 
+               
+                <span>
+             
+               <button class="btn btn-primary btn-success" v-on:click.prevent="showDropDown=!showDropDown" type="submit">Select Vault</button>
+                <!-- <button @click="showDropDown">Select Vault</button> -->
+                <div class="vaultlist" v-if="showDropDown">
+                <select v-model="vault">
+                  <!-- <option>choose a vault</option> -->
+                  <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
+                </select>
+                <button class="btn btn-primary btn-success" v-on:click.prevent="addtoVault" type="submit">Add to Vault</button>
+                </div>
+                <!-- <span>Selected: {{ selected }}</span> -->
+         <!-- </div> -->
+               
+               <button class="btn btn-primary btn-success" v-on:submit.prevent="view" type="submit">View</button>
+               <button class="btn btn-primary btn-success" v-on:submit.prevent="share" type="submit">Share Keep</button>
+          </span>           
             </div>
             </div>
             </div>
@@ -38,6 +58,8 @@
 </template>
 
 <script>
+import vaults from "./vaults";
+
 export default {
   name: "keep",
   data() {
@@ -49,8 +71,16 @@ export default {
         isPublic: 1
       },
       showKeeps: true,
-      upHere: false
+      vault: {},
+      selected: "",
+      showDropDown: true,
+      vaultlist: "",
+      vaultKeeps: {},
+      vaults: []
     };
+  },
+    components: {
+    vaults
   },
   mounted() {
     this.$store.dispatch("authenticate");
@@ -76,6 +106,10 @@ export default {
     },
     getUserKeeps() {
       this.$store.dispatch("usercreatedkeeps", this.keep);
+    },
+    addtoVault(id) {
+      console.log("add2V " + this.vault.id);
+      this.$store.dispatch(addVK, this.vault); //made some changes to add id, not sure if valid
     }
   }
 };

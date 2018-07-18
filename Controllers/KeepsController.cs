@@ -51,11 +51,17 @@ namespace Keepr.Controllers
             }
             return null;
         }
-        // PUT api/Keep/5
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody] string value)
-        // {
-        // }
+
+        //PUT api/Keep/5
+        [HttpPut("{id}")]
+        public Keep EditKeep(Keep keepId)
+        {
+            if (ModelState.IsValid)
+            {
+                return _db.UpdateViewCount(keepId);
+            }
+            return null;
+        }
 
         // DELETE api/Keep/5
         [HttpDelete("{id}")]

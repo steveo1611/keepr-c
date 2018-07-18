@@ -55,10 +55,12 @@ export default {
   },
   methods: {
     addVault() {
-      this.$store.dispatch("createVault", this.vault);
+      this.$store.dispatch("createVault", this.vault)
+      this.$store.dispacth('clearResults')
     },
     userVaults() {
-      this.$store.dispatch("getVaults", this.vaults);
+      this.$store.dispatch("getVaults", this.vaults)
+      this.$store.dispacth('clearResults')
     }
   }
 };

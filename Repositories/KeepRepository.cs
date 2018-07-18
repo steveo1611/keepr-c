@@ -35,6 +35,17 @@ namespace Keepr.Repositories
             return _db.Query<Keep>("SELECT *  FROM keeps WHERE userId = @id;", new { id });
         }
 
+        public Keep UpdateViewCount(Keep keepId)
+        {
+            int id = _db.ExecuteScalar<int>(@"
+            UPDATE keeps SET viewed = viewed +1 
+            WHERE Id = @Id;
+            SELECT LAST_INSERT_ID();
+            ", keepId);
+           keepId.Id = id;
+           return keepId;
+        }
+
         // Delete
         public bool DeleteKeep(int id)
         {

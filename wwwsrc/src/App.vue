@@ -41,7 +41,7 @@ export default {
 
   methods: {
     home() {
-      this.$route.push({ name: "Home" });
+      this.$router.push({ name: "Home" });
     },
     login() {
       this.$router.push({ name: "User" });

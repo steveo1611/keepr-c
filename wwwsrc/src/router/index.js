@@ -4,6 +4,7 @@ import home from "@/components/home";
 import user from "@/components/login";
 import keeps from "@/components/keeps";
 import vaults from "@/components/vaults";
+import keepview from "@/components/keepview";
 
 vue.use(router);
 
@@ -28,6 +29,11 @@ export default new router({
       path: "/vaults",
       name: "Vaults",
       component: vaults
-    }
+    },
+    {
+      path: "/keepview",
+      name: "keepview",
+      component: keepview
+  }
   ]
 });
