@@ -19,7 +19,7 @@ export default new vuex.Store({
     keeps: [],
     vaults: [],
     vaultKeep: [],
-     keepView: {},
+    keepView: {},
      vcount: 0
   },
   mutations: {

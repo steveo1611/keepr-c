@@ -5,6 +5,7 @@ import user from "@/components/login";
 import keeps from "@/components/keeps";
 import vaults from "@/components/vaults";
 import keepview from "@/components/keepview";
+import modal from "@/components/modal";
 
 vue.use(router);
 

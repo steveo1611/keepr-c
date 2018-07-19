@@ -30,8 +30,8 @@
               <p>{{keep.description}}</p> 
                
                 <span>
-             
-               <button class="btn btn-primary btn-success" v-on:click.prevent="showDropDown=!showDropDown" type="submit">Select Vault</button>
+             <!-- refactor item: this code is same as in the home component --> 
+               <button class="btn btn-primary btn-success" v-on:click.prevent="showDropDown=!showDropDown" type="submit">Add To Vault</button>
                 <!-- <button @click="showDropDown">Select Vault</button> -->
                 <div class="vaultlist" v-if="showDropDown">
                 <select v-model="vault">
