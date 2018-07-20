@@ -18,47 +18,54 @@
       </div>
         <div class="container-fluid">
           <div class="row personal-keeps justify-content-center">
-            <vaults v-show="false"></vaults>
             <div class="col-sm-12">
             <h1>Users Keeps</h1>
             <div class="card-deck"></div>
             <div v-for="keep in keeps" :key="keep.name">
-
+            <vaults v-show="false"></vaults>
             <div class="card p-3">
               <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
               <h3>{{keep.name}}</h3>
               <p>{{keep.description}}</p> 
                
-                <span>
-             <!-- refactor item: this code is same as in the home component --> 
-               <button class="btn btn-primary btn-success" v-on:click.prevent="showDropDown=!showDropDown" type="submit">Add To Vault</button>
-                <!-- <button @click="showDropDown">Select Vault</button> -->
-                <div class="vaultlist" v-if="showDropDown">
-                <select v-model="vault">
-                  <!-- <option>choose a vault</option> -->
-                  <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
-                </select>
-                <button class="btn btn-primary btn-success" v-on:click.prevent="addtoVault" type="submit">Add to Vault</button>
-                </div>
-                <!-- <span>Selected: {{ selected }}</span> -->
-         <!-- </div> -->
-               
-               <button class="btn btn-primary btn-success" v-on:submit.prevent="view" type="submit">View</button>
-               <button class="btn btn-primary btn-success" v-on:submit.prevent="share" type="submit">Share Keep</button>
-          </span>           
+               <button @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
+              <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
+              <button class="btn btn-primary btn-success" v-on:click.prevent="share" type="submit">Share Keep</button>
+              <template v-if='keep.isPublic == "0"'>            
+              <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
+              </template>
             </div>
-            </div>
-            </div>
-            </div>
-          </div>
         </div>
+        
+        <modal :toggle="showModal">
+          <div slot="header">
+           <h3>Select Vault</h3>
+        </div>
+        <div>
+          <ul class="vaultgroup">
+              <li class="vaultlist" v-for="vault in vaults" :key='vault.id' v-bind="id">
+            <form @submit.prevent="addtoVault(vault.id)">
+              <p class="vaultgrp">NAME: {{vault.name}}  </p>
+              <p class="vaultgrp">Description: {{vault.description}} </p>
+            <!-- <router-link @click.native="addtoVault(vault.id, keepid)" to="/">{{vault.name}} {{keepid}}</router-link> -->
+             <button :value="vault.id" class="btn btn-primary btn-success" v-on:click="test()">Select vault</button>
+            </form>
+            </li>
+          </ul>
+        </div>
+        </modal> 
+          </div>
+         </div>
+      </div>
+    </div>
+ </div>
 
-  </div>
   
 </template>
 
 <script>
 import vaults from "./vaults";
+import modal from "./modal";
 
 export default {
   name: "keep",
@@ -68,19 +75,29 @@ export default {
         name: "",
         description: "",
         contentURL: "",
-        isPublic: 1
+        isPublic: 1,
+        id: "",
+        viewed: 0
+      },
+      vault: {
+        name: "",
+        description: "",
+        userId: "",
+        id: 0
       },
       showKeeps: true,
-      vault: {},
-      selected: "",
       showDropDown: true,
+      selected: "",
       vaultlist: "",
       vaultKeeps: {},
-      vaults: []
+      keepid: null,
+      vaultid: null,
+      showModal: 0
     };
   },
-    components: {
-    vaults
+  components: {
+    vaults,
+    modal
   },
   mounted() {
     this.$store.dispatch("authenticate");
@@ -95,11 +112,16 @@ export default {
     // },
     keeps() {
       return this.$store.state.keeps;
+    },
+    viewcount() {
+      return this.$store.state.vcount;
     }
   },
   methods: {
-    toggle() {
-      this.showKeeps = !this.showKeeps;
+    toggleModal(n, id) {
+      this.keepid = id;
+      console.log(this.keepid);
+      this.showModal += n;
     },
     addKeeps() {
       this.$store.dispatch("createKeeps", this.keep);
@@ -107,12 +129,20 @@ export default {
     getUserKeeps() {
       this.$store.dispatch("usercreatedkeeps", this.keep);
     },
-    addtoVault(id) {
-      console.log("add2V " + this.vault.id);
-      this.$store.dispatch(addVK, this.vault); //made some changes to add id, not sure if valid
+    viewKeep(id) {
+      this.$store.dispatch("setviewKeep", id);
+      // this.$router.push({ name: "viewKeep" });
+    },
+
+    addtoVault(vid) {
+      this.vaultid = vid;
+      this.$store.dispatch("addVK", this.vaultid, this.keepid); //made some changes to add id, not sure if valid
     }
   }
 };
 </script>
 <style>
+.badge {
+  margin-left: 1rem;
+}
 </style>

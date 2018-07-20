@@ -38,7 +38,7 @@ export default new vuex.Store({
     setviewCount(state, vcount) {
       state.vcount = vcount;
     }
-  },
+   },
   actions: {
     login({ dispatch, commit }, payload) {
       server
@@ -145,17 +145,48 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
+    viewVault({ dispatch, commit }, vaultid) {  
+      server.get('/api/vaults/' + vault.id)
+        .then( res => {
+          console.log(res.data)
+        commit("setkeepsinVault", res.data)
+        })
+      .catch(res => {
+      console.log("failure");
+      });
+    },
+
+    delVault({dispatch, commit }, payload) {
+      server.delete('api/vaults/', payload)
+      .then(res => {
+        console.log(payload)
+        console.log("success")
+      })
+      .catch(res => {
+      console.log("failure");
+      });
+    },
+
     addVK({ dispatch, commit, store }, payload) {
-      console.log(payload);
       server
-        .post("/api/vk/", payload)
+        .post("/api/vk", payload)
         .then(res => {
           commit("setvaultKeep", payload);
+
         })
         .catch(res => {
-          console.log(res.data);
+          console.log(payload);
         });
     },
+    getVaultKeeps({dispatch, commit }, id) {
+      server
+      .get("/api/vk/" + id)
+      .then(res => {
+        commit("setvaultKeep", res.data)
+      })
+    },
+
+    
     clearResults({ dispatch, commit }) {
       commit("setKeeps", []);
       commit("setVaults", []);

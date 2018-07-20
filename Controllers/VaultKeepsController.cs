@@ -40,13 +40,12 @@ namespace Keepr.Controllers
 
         // POST api/vk
         [HttpPost]
-        [Authorize]
+         [Authorize]
         public VaultKeeps AddVK([FromBody]VaultKeeps newVK)
         {
             if (ModelState.IsValid)
             {
                 var user = HttpContext.User;
-                newVK.userId = user.Identity.Name;
                 return _db.AddVK(newVK);
             }
             return null;

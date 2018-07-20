@@ -27,7 +27,7 @@
     props: ['toggle'],
     data(){
       return {
-        open: false,
+        open: false
       }
     },
     watch: {
@@ -44,14 +44,9 @@
     methods: {
       handleClicks(e){
         e.stopPropagation();
-      },
-
-      addtoVault(vaultid, keepid) {
-      console.log("add2V " + keepid);
-      console.log("2V " + this.keep.id );
-      this.$store.dispatch("addVK", this.vault); //made some changes to add id, not sure if valid
       }
-    },
+
+          },
   };
 </script>
 

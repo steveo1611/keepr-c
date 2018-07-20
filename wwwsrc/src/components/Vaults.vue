@@ -12,11 +12,20 @@
           </div>
           <div>
             <h2>Vault List</h2>
-             <div v-for="vault in vaults" class="col-sm-12" :key="vault.name">
-               <p>NAME: {{vault.name}}  </p>
-              <p>Description: {{vault.description}} </p>
+             <ul>
+             <li v-for="vault in vaults" class="col-sm-12" :key="vault.id">
+               <form>
+               <p class="vaultgrp">NAME: {{vault.name}}  </p>
+              <p class="vaultgrp">Description: {{vault.description}} </p>
+              <button class="btn btn-primary btn-success" :value="vault.id"  @click="viewVault(vault.id)" type="submit">View Vault<span class="badge badge-light">coming soon Keeps</span></button>
+              <button class="btn btn-primary btn-danger" :value="vault.id" @click="deletevault(vault.id)" type="submit">Delete Vault</button>
+               </form>
+               </li>
+             </ul>
           </div>
-          </div>
+        <div>
+
+        </div>
         </div>
       </div>
 </div>
@@ -36,7 +45,8 @@ export default {
         description: "",
         userId: "",
         vaultId: ""
-      }
+      },
+keep: {},
     };
   },
   mounted() {
@@ -51,6 +61,9 @@ export default {
     },
     vaults() {
       return this.$store.state.vaults;
+    },
+    vaultKeeps() {
+      return this.$store.state.vaultKeep;
     }
   },
   methods: {
@@ -60,8 +73,21 @@ export default {
     },
     userVaults() {
       this.$store.dispatch("getVaults", this.vaults)
-      this.$store.dispacth('clearResults')
+      this.$store.dispatch('clearResults')
+    },
+    viewVault(id) {
+      this.$store.dispatch('getVaultKeeps', id)
+      // this.$store.dispatch('clearResults')
+    },
+    deleteVault(vid) {
+      this.$store.dispatch('delVault', vid)
+    },
+    
+    addtoVault(vaultid, keepid) {
+
+      // this.$store.dispatch("addVK", piss, keep.id); //made some changes to add id, not sure if valid
     }
+
   }
 };
 </script>
@@ -69,5 +95,10 @@ export default {
 h2 {
   margin-top: 2rem;
 }
+.vaultgrp{
+  text-align: left;
+  margin-top: 1rem;
+}
+
 </style>
 
