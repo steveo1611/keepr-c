@@ -17,9 +17,14 @@
                <form>
                <p class="vaultgrp">NAME: {{vault.name}}  </p>
               <p class="vaultgrp">Description: {{vault.description}} </p>
-              <button class="btn btn-primary btn-success" :value="vault.id"  @click="viewVault(vault.id)" type="submit">View Vault<span class="badge badge-light">coming soon Keeps</span></button>
+              <button class="btn btn-primary btn-success" :value="vault.id"  @click="viewVault(vault)" type="submit">View Vault</button>
               <button class="btn btn-primary btn-danger" :value="vault.id" @click="deletevault(vault.id)" type="submit">Delete Vault</button>
                </form>
+               <div>
+                 <div v-for="keep in vaultKeeps" v-if="activeVault == vault">
+                   {{keep.name}}
+                 </div>
+               </div>
                </li>
              </ul>
           </div>
@@ -46,7 +51,8 @@ export default {
         userId: "",
         vaultId: ""
       },
-keep: {},
+      keep: {},
+      activeVault: {}
     };
   },
   mounted() {
@@ -68,26 +74,25 @@ keep: {},
   },
   methods: {
     addVault() {
-      this.$store.dispatch("createVault", this.vault)
-      this.$store.dispacth('clearResults')
+      this.$store.dispatch("createVault", this.vault);
+      this.$store.dispacth("clearResults");
     },
     userVaults() {
-      this.$store.dispatch("getVaults", this.vaults)
-      this.$store.dispatch('clearResults')
+      this.$store.dispatch("getVaults", this.vaults);
+      this.$store.dispatch("clearResults");
     },
-    viewVault(id) {
-      this.$store.dispatch('getVaultKeeps', id)
+    viewVault(vault) {
+      this.activeVault = vault;
+      this.$store.dispatch("getVaultKeeps", vault.id);
       // this.$store.dispatch('clearResults')
     },
     deleteVault(vid) {
-      this.$store.dispatch('delVault', vid)
+      this.$store.dispatch("delVault", vid);
     },
-    
-    addtoVault(vaultid, keepid) {
 
+    addtoVault(vaultid, keepid) {
       // this.$store.dispatch("addVK", piss, keep.id); //made some changes to add id, not sure if valid
     }
-
   }
 };
 </script>
@@ -95,10 +100,9 @@ keep: {},
 h2 {
   margin-top: 2rem;
 }
-.vaultgrp{
+.vaultgrp {
   text-align: left;
   margin-top: 1rem;
 }
-
 </style>
 

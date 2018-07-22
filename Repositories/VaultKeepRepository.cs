@@ -30,9 +30,9 @@ namespace Keepr.Repositories
         //     return _db.Query<VaultKeeps>("SELECT * FROM keeps WHERE IsPublic = 1;");
         // }
         // GetbyUser
-        public IEnumerable<VaultKeeps> GetByVaultId(string id)
+        public IEnumerable<Keep> GetByVaultId(string id)
         {
-           return _db.Query<VaultKeeps>(@"
+            return _db.Query<Keep>(@"
             SELECT * FROM vaultkeeps vk
             INNER JOIN keeps k on k.id = vk.keepId
             WHERE (vaultId = @id);

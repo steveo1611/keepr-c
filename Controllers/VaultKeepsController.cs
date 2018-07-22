@@ -29,7 +29,7 @@ namespace Keepr.Controllers
         // GET api/Keep/5
         [HttpGet("{id}")]
         [Authorize]
-        public IEnumerable<VaultKeeps> GetByVaultId(string id)
+        public IEnumerable<Keep> GetByVaultId(string id)
         {
             if (ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace Keepr.Controllers
 
         // POST api/vk
         [HttpPost]
-         [Authorize]
+        [Authorize]
         public VaultKeeps AddVK([FromBody]VaultKeeps newVK)
         {
             if (ModelState.IsValid)
