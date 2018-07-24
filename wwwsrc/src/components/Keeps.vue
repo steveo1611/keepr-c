@@ -28,9 +28,9 @@
               <h3>{{keep.name}}</h3>
               <p>{{keep.description}}</p> 
                
-               <button @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
+               <button class="btn btn-primary btn-primary" @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
               <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
-              <button class="btn btn-primary btn-success" v-on:click.prevent="share" type="submit">Share Keep</button>
+              <button class="btn btn-primary btn-info" v-on:click.prevent="share" type="submit">Share Keep</button>
               <template v-if='keep.isPublic == "0"'>            
               <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
               </template>
@@ -43,7 +43,7 @@
         </div>
         <div>
           <ul class="vaultgroup">
-              <li class="vaultlist" v-for="vault in vaults" :key='vault.id' v-bind="id">
+              <li class="vaultlist" v-for="vault in vaults" :key='vault.id'>
             <form @submit.prevent="addtoVault(vault.id)">
               <p class="vaultgrp">NAME: {{vault.name}}  </p>
               <p class="vaultgrp">Description: {{vault.description}} </p>
@@ -110,6 +110,9 @@ export default {
     // createKeeps() {
     //   return this.$store.state.keep;
     // },
+        vaults() {
+       return this.$store.state.vaults;
+    },
     keeps() {
       return this.$store.state.keeps;
     },
@@ -135,8 +138,13 @@ export default {
     },
 
     addtoVault(vid) {
-      this.vaultid = vid;
-      this.$store.dispatch("addVK", this.vaultid, this.keepid); //made some changes to add id, not sure if valid
+      this.vaultid = vid
+      var payload = {
+        vaultId: this.vaultid,
+        keepId: this.keepid,
+        userId: this.$store.state.user.id
+      }
+      this.$store.dispatch("addVK", payload) 
     }
   }
 };
