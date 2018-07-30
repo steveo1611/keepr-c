@@ -72,11 +72,11 @@ export default new vuex.Store({
           console.log(res);
         });
     },
-    logOut({ commit, dispatch, state }, payload) {
+    logOut({ commit, dispatch}, payload) {
       server
         .post("/account/logout")
         .then(res => {
-          // commit("setUser", payload);
+          commit("setUser", '');
           router.push({ name: "Home" });
         })
         .catch(res => {
