@@ -57,7 +57,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch("authenticate");
-    this.$store.dispatch("getVaults");
+    if (this.$store.state.user != ""){
+    this.$store.dispatch("getVaults")};
   },
 
   components: {},

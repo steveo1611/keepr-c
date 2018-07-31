@@ -20,7 +20,8 @@ export default new vuex.Store({
     vaults: [],
     vaultKeep: [],
     keepView: {},
-     vcount: 0
+    activeKeep:{},
+    vcount: 0
   },
   mutations: {
     setUser(state, user) {
@@ -37,6 +38,9 @@ export default new vuex.Store({
     },
     setviewCount(state, vcount) {
       state.vcount = vcount;
+    },
+    setActiveKeep(state, activeKeep) {
+      state.activeKeep = activeKeep;
     }
    },
   actions: {

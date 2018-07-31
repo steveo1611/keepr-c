@@ -17,50 +17,49 @@
         </div>
       </div>
         <div class="container-fluid">
-          <div class="row personal-keeps justify-content-center">
-            <div class="col-sm-12">
-            <h1>Users Keeps</h1>
-            <div class="card-deck"></div>
-            <div v-for="keep in keeps" :key="keep.name">
-            <vaults v-show="false"></vaults>
-            <div class="card p-3">
-              <img class = "card-img-top" :src="keep.contentURLcors || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
-              <h3>{{keep.name}}</h3>
-              <p>{{keep.description}}</p> 
-               
-               <button class="btn btn-primary btn-primary" @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
-              <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
-              <button class="btn btn-primary btn-info" v-on:click.prevent="share" type="submit">Share Keep</button>
-              <template v-if='keep.isPublic == "0"'>            
-              <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
-              </template>
+          <h1>Users Keeps</h1>
+           <div class="row personal-keeps justify-content-center">
+            <div class="card-columns">
+              <div v-for="keep in keeps" :key="keep.name">
+                  <vaults v-show="false"></vaults>
+                  <div class="card p-3">
+                    <img class = "card-img-top" :src="keep.contentURL || './static/img/placehold.jpg'">  <!-- changed name of initial src file due to cors issues -->
+                    <h3>{{keep.name}}</h3>
+                    <p>{{keep.description}}</p> 
+                    <button class="btn btn-primary btn-primary" @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
+                    <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
+                    <button class="btn btn-primary btn-info" v-on:click.prevent="share" type="submit">Share Keep</button>
+                    <template v-if='keep.isPublic == "0"'>            
+                      <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
+                    </template>
+                  </div>
+              </div>
             </div>
+          </div>
         </div>
         
-        <modal :toggle="showModal">
-          <div slot="header">
-           <h3>Select Vault</h3>
-        </div>
-        <div>
-          <ul class="vaultgroup">
-              <li class="vaultlist" v-for="vault in vaults" :key='vault.id'>
-            <form @submit.prevent="addtoVault(vault.id)">
-              <p class="vaultgrp">NAME: {{vault.name}}  </p>
-              <p class="vaultgrp">Description: {{vault.description}} </p>
+    <modal :toggle="showModal">
+      <div slot="header">
+        <h3>Select Vault</h3>
+      </div>
+      <div>
+        <ul class="vaultgroup">
+          <li class="vaultlist" v-for="vault in vaults" :key='vault.id'>
+          <form @submit.prevent="addtoVault(vault.id)">
+            <p class="vaultgrp">NAME: {{vault.name}}  </p>
+            <p class="vaultgrp">Description: {{vault.description}} </p>
             <!-- <router-link @click.native="addtoVault(vault.id, keepid)" to="/">{{vault.name}} {{keepid}}</router-link> -->
-             <button :value="vault.id" class="btn btn-primary btn-success" v-on:click="test()">Select vault</button>
-            </form>
-            </li>
-          </ul>
-        </div>
-        </modal> 
-          </div>
-         </div>
+            <button :value="vault.id" class="btn btn-primary btn-success" v-on:click="test()">Select vault</button>
+          </form>
+          </li>
+        </ul>
+      </div>
+    </modal> 
+          <!-- </div> -->
+         <!-- </div> -->
       </div>
     </div>
- </div>
 
-  
 </template>
 
 <script>
@@ -86,8 +85,8 @@ export default {
         id: 0
       },
       showKeeps: true,
-      showDropDown: true,
-      selected: "",
+      // showDropDown: true,
+      // selected: "",
       vaultlist: "",
       vaultKeeps: {},
       keepid: null,
@@ -107,10 +106,7 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
-    // createKeeps() {
-    //   return this.$store.state.keep;
-    // },
-        vaults() {
+    vaults() {
        return this.$store.state.vaults;
     },
     keeps() {
@@ -123,7 +119,6 @@ export default {
   methods: {
     toggleModal(n, id) {
       this.keepid = id;
-      console.log(this.keepid);
       this.showModal += n;
     },
     addKeeps() {
@@ -153,4 +148,8 @@ export default {
 .badge {
   margin-left: 1rem;
 }
+.card-columns {
+  display: inline-block;
+  column-count: 4;
+  }
 </style>
