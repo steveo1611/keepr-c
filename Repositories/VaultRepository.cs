@@ -39,10 +39,10 @@ namespace Keepr.Repositories
         public bool DeleteVault(int id)
         {
             var i = _db.Execute(@"
-      DELETE FROM vaults
-      WHERE id = @id
-      LIMIT 1;
-      ", new { id });
+            DELETE FROM vaults
+            WHERE id = @id
+            LIMIT 1;
+            ", new { id });
             if (i > 0)
             {
                 return true;

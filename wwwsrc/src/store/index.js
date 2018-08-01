@@ -108,15 +108,15 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
-    createKeeps({ dispatch, commit, state }, payload) {
+    createKeeps({ dispatch, commit }, payload) {
       server
         .post("/api/keeps", payload)
         .then(res => {
-          // console.log(payload)
           commit("setKeeps", payload);
+          console.log('success')
         })
         .catch(res => {
-          console.log(res.data);
+          console.log(' CK fail');
         });
     },
     usercreatedkeeps({ dispatch, commit, state }) {
@@ -143,7 +143,7 @@ export default new vuex.Store({
       server
         .post("/api/vaults", payload)
         .then(res => {
-          commit("setVaults", payload);
+        commit("setVaults", payload);
         })
         .catch(res => {
           console.log(res.data);
@@ -161,13 +161,12 @@ export default new vuex.Store({
     },
 
     delVault({dispatch, commit }, payload) {
-      server.delete('api/vaults/', payload)
+      server.delete('api/vaults/'+payload)
       .then(res => {
-        console.log(payload)
-        console.log("success")
+        console.log("Delete success")
       })
       .catch(res => {
-      console.log("failure");
+      console.log("Delete failure");
       });
     },
 

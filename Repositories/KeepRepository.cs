@@ -50,10 +50,10 @@ namespace Keepr.Repositories
         public bool DeleteKeep(int id)
         {
             var i = _db.Execute(@"
-      DELETE FROM keeps
-      WHERE id = @id
-      LIMIT 1;
-      ", new { id });
+                DELETE FROM keeps
+                WHERE id = @id
+                LIMIT 1;
+                ", new { id });
             if (i > 0)
             {
                 return true;

@@ -40,10 +40,10 @@ namespace Keepr.Controllers
 
         // POST api/Keep
         [HttpPost]
-        [Authorize]
+      
         public Keep CreateKeep([FromBody]Keep newKeep)
         {
-            if (ModelState.IsValid)
+        if (ModelState.IsValid)
             {
                 var user = HttpContext.User;
                 newKeep.UserId = user.Identity.Name;

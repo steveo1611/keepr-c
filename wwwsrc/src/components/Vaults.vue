@@ -18,7 +18,7 @@
                <p class="vaultgrp">NAME: {{vault.name}}  </p>
               <p class="vaultgrp">Description: {{vault.description}} </p>
               <button class="btn btn-primary btn-success" :value="vault.id"  @click="viewVault(vault)" type="submit">View Vault</button>
-              <button class="btn btn-primary btn-danger" :value="vault.id" @click="deletevault(vault.id)" type="submit">Delete Vault</button>
+              <button class="btn btn-primary btn-danger" :value="vault.id" @click="deleteVault(vault.id)" type="submit">Delete Vault</button>
                </form>
                <div>
                  <div v-for="keep in vaultKeeps" v-if="activeVault == vault">
@@ -75,8 +75,9 @@ export default {
   },
   methods: {
     addVault() {
+      console.log("test")
       this.$store.dispatch("createVault", this.vault);
-      this.$store.dispacth("clearResults");
+     // this.$store.dispatch("clearResults");
     },
     userVaults() {
       this.$store.dispatch("getVaults", this.vaults);

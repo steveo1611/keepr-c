@@ -46,11 +46,13 @@ namespace Keepr.Controllers
         // {
         // }
 
-        // DELETE api/Vault/5
-        // [HttpDelete("{id}")]
-        // public void Delete(int id)
-        // {
-        // }
+     //   DELETE api/Vault/5
+        [HttpDelete("{id}")]
+        [Authorize]
+        public void DeleteVault(int id)
+        {
+            _db.DeleteVault(id);
+        }
     }
 
 
