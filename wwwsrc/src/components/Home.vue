@@ -1,12 +1,13 @@
 <template>
     <div class = "home">
-      <div class="row public-keeps">
+      <keeps></keeps>
+      <!-- <div class="row public-keeps">
         <div v-for="keep in keeps" class="col-sm-4" :key="keep.id">
          <vaults v-show="false"></vaults>
         <div class="card">
-             <img class = "card-img-top" :src="keep.contentURL || './static/img/placehold.jpg'"> 
+             <img class = "card-img-top" :src="keep.contentURL || './static/img/placehold.jpg'">  -->
                <!-- changed name of initial src file due to cors issues -->
-              <span v-if="user">
+              <!-- <span v-if="user">
              
              <button @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
               <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id, keep)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
@@ -24,16 +25,16 @@
             <li class="vaultlist" v-for="vault in vaults" :key='vault.id' v-bind="id">
               <form @submit.prevent="addtoVault(vault.id)">
               <p class="vaultgrp">NAME: {{vault.name}}  </p>
-              <p class="vaultgrp">Description: {{vault.description}} </p>
+              <p class="vaultgrp">Description: {{vault.description}} </p> -->
              <!-- <button :value="vault.id" class="btn btn-primary btn-success" v-on:click="go">Select vault</button> -->
-              <button class="btn btn-primary btn-success" v-on:click="toggleModal(1, id)"> Select Vault</button>
+              <!-- <button class="btn btn-primary btn-success" v-on:click="toggleModal(1, id)"> Select Vault</button>
               </form>
             </li>
             <button class="btn btn-primary btn-warning" v-on:click="toggleModal(0, 0)">Cancel</button>
           </ul>
         </div>
         </modal>
-    </div>
+    </div> -->
     </div>
 </template>
 
@@ -75,6 +76,7 @@ export default {
   },
   components: {
     vaults,
+    keeps,
     modal
   },
   mounted() {

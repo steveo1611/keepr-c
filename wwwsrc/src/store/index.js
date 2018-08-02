@@ -28,6 +28,7 @@ export default new vuex.Store({
       state.user = user;
     },
     setKeeps(state, keeps) {
+      debugger
       state.keeps = keeps;
     },
     setVaults(state, vaults) {

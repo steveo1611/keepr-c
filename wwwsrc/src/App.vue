@@ -41,20 +41,11 @@ export default {
   },
 
   methods: {
-    home() {
-      this.$router.push({ name: "Home" });
-    },
     login() {
       this.$router.push({ name: "User" });
     },
     logOut() {
       this.$store.dispatch("logOut");
-    },
-    keeps() {
-      this.$router.push({ name: "Keeps" });
-    },
-    vaults() {
-      this.$router.push({ name: "vaults" });
     }
   }
 };

@@ -1,14 +1,15 @@
 <template>
 <div class="user">
     <div class="row justify-content-center">
+      <span v-if="$route.name == 'Keeps'">
       <div class="col-12 card">
         <div class="keeps">
           <h1>Add Keeps</h1>
           <form v-on:submit.prevent="addKeeps" class="form">
-            <input class="input" type="text" name="name" placeholder=" Name" id="name" v-model="keep.name">
-            <input class="input" type="text" name="description" placeholder=" Description" id="description" v-model="keep.description">
-            <input class="input" type="url" name="contentURL" placeholder=" contentURL" id="contentURL" v-model="keep.contentURL">
-              <button class="btn btn-primary btn-success" type="submit">Add</button>
+            <input required class="input" type="text" name="name" placeholder=" Name" id="name" v-model="keep.name">
+            <input required class="input" type="text" name="description" placeholder=" Description" id="description" v-model="keep.description">
+            <input required class="input" type="url" name="contentURL" placeholder=" contentURL" id="contentURL" v-model="keep.contentURL">
+            <button class="btn btn-primary btn-success" type="submit">Add</button>
             <div>
               <input type="checkbox" id="privatecheckbox" v-model="keep.isPublic">
               <label for="checkbox">Marked as public</label>
@@ -16,29 +17,34 @@
           </form>
         </div>
       </div>
-        <div class="container-fluid">
-          <h1>Users Keeps</h1>
-          <span v-if="currentUser">
+      </span>
+      <div class="container-fluid">
+        <span v-if="$route.name == 'Keeps'"> 
+          <h1>{{currentUser.username}}'s Keeps</h1>
+        </span>
            <div class="row personal-keeps justify-content-center">
             <div class="card-columns">
               <div v-for="keep in keeps" :key="keep.name">
-                  <vaults v-show="false"></vaults>
+                  <!-- <vaults v-show="false"></vaults> -->
                   <div class="card p-3">
                     <img class = "card-img-top" :src="keep.contentURL || './static/img/placehold.jpg'"> 
                     <h3>{{keep.name}}</h3>
                     <p>{{keep.description}}</p> 
+                    <span v-if="currentUser">
                     <button class="btn btn-primary btn-primary" @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
                     <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
                     <button class="btn btn-primary btn-info" v-on:click.prevent="share" type="submit">Share Keep</button>
                     <template v-if='keep.isPublic == "0"'>            
                       <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
                     </template>
+                    </span>
                   </div>
               </div>
             </div>
-          </div>
-          </span>
+           </div>
+          
         </div>
+          </div>
         
     <modal :toggle="showModal">
       <div slot="header">
@@ -57,8 +63,8 @@
         </ul>
       </div>
     </modal> 
-    </div>
-    </div>
+  </div>
+
 </template>
 
 <script>
@@ -70,20 +76,20 @@ export default {
   data() {
     return {
       keep: {
-        name: "",
-        description: "",
-        contentURL: "",
+        name: '',
+        description: '',
+        contentURL: '',
         isPublic: 1,
         viewed: 0
       },
       vault: {
-        name: "",
-        description: "",
-        userId: "",
+        name: '',
+        description: '',
+        userId: '',
         id: 0
       },
       showKeeps: true,
-      vaultlist: "",
+      vaultlist: '',
       vaultKeeps: {},
       keepid: null,
       vaultid: null,
@@ -96,7 +102,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("authenticate");
-   // this.$store.dispatch("usercreatedkeeps");
+   this.$store.dispatch("usercreatedkeeps");
   },
   computed: {
     currentUser() {
@@ -111,6 +117,7 @@ export default {
     viewcount() {
       return this.$store.state.vcount;
     }
+
   },
   methods: {
     toggleModal(n, id) {
@@ -118,6 +125,7 @@ export default {
       this.showModal += n;
     },
     addKeeps() {
+      debugger
       this.$store.dispatch("createKeeps", this.keep);
     },
     getUserKeeps() {
@@ -127,7 +135,6 @@ export default {
       this.$store.dispatch("setviewKeep", id);
       // this.$router.push({ name: "viewKeep" });
     },
-
     addtoVault(vid) {
       this.vaultid = vid
       var payload = {
