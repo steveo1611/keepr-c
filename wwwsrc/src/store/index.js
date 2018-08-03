@@ -45,6 +45,7 @@ export default new vuex.Store({
     },
     setActiveKeep(state, activeKeep) {
       state.activeKeep = activeKeep;
+      console.log(activeKeep.id)
     }
    },
   actions: {
@@ -93,9 +94,10 @@ export default new vuex.Store({
     },
     setviewKeep({ commit, dispatch, state }, payload) {
       server
-        .put("/api/keeps/" + payload)
+        .put("/api/keeps/" + payload.id)
         .then(res => {
-          commit("setviewCount", payload);
+          commit("setviewCount", payload.id);
+          commit("setActiveKeep", payload)
           router.push({ name: "keepview" });
         })
         .catch(res => {
@@ -180,7 +182,6 @@ export default new vuex.Store({
         .post("/api/vk", payload)
         .then(res => {
           commit("setvaultKeep", payload);
-
         })
         .catch(res => {
           console.log(payload);

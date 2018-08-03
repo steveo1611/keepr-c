@@ -25,15 +25,14 @@
            <div class="row personal-keeps justify-content-center">
             <div class="card-columns">
               <div v-for="keep in keeps" :key="keep.name">
-                  <!-- <vaults v-show="false"></vaults> -->
                   <div class="card p-3">
                     <img class = "card-img-top" :src="keep.contentURL || './static/img/placehold.jpg'"> 
                     <h3>{{keep.name}}</h3>
                     <p>{{keep.description}}</p> 
                     <span v-if="currentUser">
-                    <button class="btn btn-primary btn-primary" @click="showModal" :key="keep.id">Add To Vault</button>
-                    <button class="btn btn-primary btn-success" @click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
-                    <button class="btn btn-primary btn-info" @click.prevent="share" type="submit">Share Keep</button>
+                    <button class="btn btn-primary btn-primary" @click="showModal(keep)" :key="keep.id">Add To Vault</button>
+                    <button class="btn btn-primary btn-success" @click.prevent="viewKeep(keep)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
+                    <!-- <button class="btn btn-primary btn-info" @click.prevent="share" type="submit">Share Keep</button> -->
                     <template v-if='keep.isPublic == "0"'>            
                       <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
                     </template>
@@ -44,29 +43,9 @@
            </div>
           </div>
         </div>
-        
-    <!-- <modal :toggle="showModal"> -->
-      <modal v-show="isModalVisible" @close="closeModal">
-      <div slot="header">
-        <h3>Select Vault</h3>
-      </div>
-      <div slot="body">
-        <ul class="vaultgroup">
-          <li class="vaultlist" v-for="vault in vaults" :key='vault.id'>
-          <form @submit.prevent="addtoVault(vault.id)">
-            <p class="vaultgrp">NAME: {{vault.name}}  </p>
-            <p class="vaultgrp">Description: {{vault.description}} </p>
-            <!-- <router-link @click.native="addtoVault(vault.id, keepid)" to="/">{{vault.name}} {{keepid}}</router-link> -->
-            <button class="btn btn-primary btn-success" type="submit">Select vault</button>
-          </form>
-          </li>
-        </ul>
-      </div>
-      <!-- <div slot="footer">
-        </div> -->
-    </modal> 
-  </div>
-
+<!-- modal section -->
+      <modal v-show="isModalVisible" @close="closeModal"></modal> 
+    </div>
 </template>
 
 <script>
@@ -95,7 +74,6 @@ export default {
       vaultKeeps: {},
       keepid: null,
       vaultid: null,
-      // showModal: 0,
       isModalVisible: false,
     };
   },
@@ -124,12 +102,9 @@ export default {
 
   },
   methods: {
-    // toggleModal(n, id) {
-    //   this.keepid = id;
-    //   this.showModal += n;
-    // },
-    showModal() {
+    showModal(keep) {
       this.isModalVisible = true;
+      this.$store.commit("setActiveKeep", keep);
     },
     closeModal() {
       this.isModalVisible = false;
@@ -141,19 +116,8 @@ export default {
     getUserKeeps() {
       this.$store.dispatch("usercreatedkeeps", this.keep);
     },
-    viewKeep(id) {
-      debugger
-      this.$store.dispatch("setviewKeep", id);
-      // this.$router.push({ name: "viewKeep" });
-    },
-    addtoVault(vid) {
-      this.vaultid = vid
-      var payload = {
-        vaultId: this.vaultid,
-        keepId: this.keepid,
-        userId: this.$store.state.user.id
-      }
-      this.$store.dispatch("addVK", payload) 
+    viewKeep(keep) {
+      this.$store.dispatch("setviewKeep", keep);
     }
   }
 };

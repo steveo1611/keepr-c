@@ -1,6 +1,7 @@
 <template>
 <div class="vaults">
-    <div class="row justify-content-center">
+  <span v-if="$route.name == 'Vaults'">
+    <div class="row justify-vaults-center">
       <div class="col-6 card">
         <div class="vault">
           <h1>Create Vaults</h1>
@@ -29,10 +30,10 @@
              </ul>
           </div>
         <div>
-
         </div>
-        </div>
-      </div>
+       </div>
+    </div>
+  </span>
 </div>
 
 </template>
