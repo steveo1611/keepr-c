@@ -1,23 +1,31 @@
 <template>
-  <div v-if="open">
-    <transition name="modal">
-      <div class="modal-mask" @click="open = false">
+  <transition id="mod" name="modal-fade">
+      <div class="modal-mask" @click="close">
+      <div class="modal-backdrop">
         <div class="modal-wrapper">
+          <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
           <div class="modal-container" @click.capture="handleClicks">
 
-            <div class="modal-header">
-              <slot name="header"></slot>
-            </div>
-
-            <div class="modal-body">
-              <slot></slot>
+            <header class="modal-header" id="modalTitle">
+              <slot name="header">
+                default header
+              <button type="button" class="btn-close" @click="close">x</button>
+              </slot>
+            </header>
+            <section class="modal-body" id="modalDescription">
+              <slot name="body">body default</slot>
+            </section>
+            <footer class="modal-footer">
+              <slot name="footer">
+                <button type="button" class="btn-green" @click="close">close</button>
+              </slot>
+            </footer>
             </div>
           </div>
         </div>
       </div>
+      </div>
     </transition>
-  </div>
-  <div v-else></div>
 </template>
 
 
@@ -44,9 +52,11 @@
     methods: {
       handleClicks(e){
         e.stopPropagation();
+      },
+      close() {
+        this.$emit('close');
       }
-
-          },
+    },
   };
 </script>
 
@@ -61,7 +71,7 @@
     background-color: rgba(0, 0, 0, .5);
     display: table;
     transition: opacity .3s ease;
-  }
+   } 
 
   .modal-wrapper {
     display: table-cell;
@@ -69,8 +79,12 @@
   }
 
   .modal-container {
-    width: 300px;
+    width: 50rem;
+    /* max-height: 25rem; */
+    overflow-y: auto;
     margin: 0px auto;
+    -webkit-flex: 1 !important;
+    -ms-flex: 1 !important;
     padding: 20px 30px;
     background-color: #fff;
     border-radius: 2px;
@@ -79,39 +93,63 @@
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  .modal-header h3 {
-    margin-top: 0;
-    color: #42b983;
+ .modal-backdrop {
+    position: fixed;
+    top: 0;
+    /* bottom: 0; */
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal {
+    /* background: #FFFFFF; */
+    box-shadow: 2px 2px 20px 1px;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-header,
+  .modal-footer {
+    padding: 15px;
+    display: flex;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #eeeeee;
+    color: #4AAE9B;
+    justify-content: space-between;
+  }
+
+  .modal-footer {
+    border-top: 1px solid #eeeeee;
+    justify-content: flex-end;
   }
 
   .modal-body {
-    margin: 20px 0;
+    position: relative;
+    padding: 20px 10px;
+    overflow-y: auto;
   }
 
-  .modal-default-button {
-    float: right;
+  .btn-close {
+    border: none;
+    font-size: 20px;
+    padding: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #4AAE9B;
+    background: transparent;
   }
 
-  /*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-  .modal-enter {
-    opacity: 0;
-  }
-
-  .modal-leave-active {
-    opacity: 0;
-  }
-
-  .modal-enter .modal-container,
-  .modal-leave-active .modal-container {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+  .btn-green {
+    color: white;
+    background: #4AAE9B;
+    border: 1px solid #4AAE9B;
+    border-radius: 2px;
   }
 </style>

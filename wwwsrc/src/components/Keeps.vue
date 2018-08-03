@@ -4,8 +4,8 @@
       <span v-if="$route.name == 'Keeps'">
       <div class="col-12 card">
         <div class="keeps">
-          <h1>Add Keeps</h1>
-          <form v-on:submit.prevent="addKeeps" class="form">
+          <h1>Add Keep</h1>
+          <form @submit.prevent="addKeep" class="form">
             <input required class="input" type="text" name="name" placeholder=" Name" id="name" v-model="keep.name">
             <input required class="input" type="text" name="description" placeholder=" Description" id="description" v-model="keep.description">
             <input required class="input" type="url" name="contentURL" placeholder=" contentURL" id="contentURL" v-model="keep.contentURL">
@@ -31,9 +31,9 @@
                     <h3>{{keep.name}}</h3>
                     <p>{{keep.description}}</p> 
                     <span v-if="currentUser">
-                    <button class="btn btn-primary btn-primary" @click="toggleModal(1, keep.id)" :key="keep.id">Add To Vault</button>
-                    <button class="btn btn-primary btn-success" v-on:click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
-                    <button class="btn btn-primary btn-info" v-on:click.prevent="share" type="submit">Share Keep</button>
+                    <button class="btn btn-primary btn-primary" @click="showModal" :key="keep.id">Add To Vault</button>
+                    <button class="btn btn-primary btn-success" @click.prevent="viewKeep(keep.id)" type="submit">View<span class="badge badge-light">{{keep.viewed}}</span></button>
+                    <button class="btn btn-primary btn-info" @click.prevent="share" type="submit">Share Keep</button>
                     <template v-if='keep.isPublic == "0"'>            
                       <button class="btn btn-primary btn-danger" v-on:click.prevent="deleteKeep" type="submit">Delete Keep</button>
                     </template>
@@ -42,26 +42,28 @@
               </div>
             </div>
            </div>
-          
-        </div>
           </div>
+        </div>
         
-    <modal :toggle="showModal">
+    <!-- <modal :toggle="showModal"> -->
+      <modal v-show="isModalVisible" @close="closeModal">
       <div slot="header">
         <h3>Select Vault</h3>
       </div>
-      <div>
+      <div slot="body">
         <ul class="vaultgroup">
           <li class="vaultlist" v-for="vault in vaults" :key='vault.id'>
           <form @submit.prevent="addtoVault(vault.id)">
             <p class="vaultgrp">NAME: {{vault.name}}  </p>
             <p class="vaultgrp">Description: {{vault.description}} </p>
             <!-- <router-link @click.native="addtoVault(vault.id, keepid)" to="/">{{vault.name}} {{keepid}}</router-link> -->
-            <button :value="vault.id" class="btn btn-primary btn-success" v-on:click="test()">Select vault</button>
+            <button class="btn btn-primary btn-success" type="submit">Select vault</button>
           </form>
           </li>
         </ul>
       </div>
+      <!-- <div slot="footer">
+        </div> -->
     </modal> 
   </div>
 
@@ -93,7 +95,8 @@ export default {
       vaultKeeps: {},
       keepid: null,
       vaultid: null,
-      showModal: 0
+      // showModal: 0,
+      isModalVisible: false,
     };
   },
   components: {
@@ -102,7 +105,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch("authenticate");
-   this.$store.dispatch("usercreatedkeeps");
+    this.$store.dispatch("usercreatedkeeps");
+    this.$store.dispatch("getVaults")
   },
   computed: {
     currentUser() {
@@ -120,18 +124,25 @@ export default {
 
   },
   methods: {
-    toggleModal(n, id) {
-      this.keepid = id;
-      this.showModal += n;
+    // toggleModal(n, id) {
+    //   this.keepid = id;
+    //   this.showModal += n;
+    // },
+    showModal() {
+      this.isModalVisible = true;
     },
-    addKeeps() {
-      debugger
-      this.$store.dispatch("createKeeps", this.keep);
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    addKeep() {
+      this.$store.dispatch("createKeep", this.keep);
+      this.$store.dispatch("usercreatedkeeps", this.keep);
     },
     getUserKeeps() {
       this.$store.dispatch("usercreatedkeeps", this.keep);
     },
     viewKeep(id) {
+      debugger
       this.$store.dispatch("setviewKeep", id);
       // this.$router.push({ name: "viewKeep" });
     },

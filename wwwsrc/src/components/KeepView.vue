@@ -13,9 +13,10 @@
                 </div>
             </div>
         </div>
-    <modal :toggle="showModal">
+    <!-- <modal :toggle="showModal"> -->
+            <modal v-show="isModalVisible" @close="closeModal">
       <div slot="header">
-        <h3>Select Vault</h3>
+        <h3>??Select Vault</h3>
       </div>
       <div>
         <ul class="vaultgroup">
@@ -52,7 +53,8 @@ export default {
       keepid: null,
       vaultid: null,
       id: null,
-      showModal: 0
+      // showModal: 0,
+      isModalVisible: false,
     };
   },
   components: {
@@ -71,9 +73,12 @@ export default {
     goback() {
       this.$router.push({ name: "Home" });
     },
-    toggleModal(n, id) {
-      this.keepid = id;
-      this.showModal += n;
+    // toggleModal(n, id) {
+    //   this.keepid = id;
+    //   this.showModal += n;
+    // },
+    showModal() {
+      this.isModalVisible = true;
     },
         addtoVault(vid) {
       this.vaultid = vid;

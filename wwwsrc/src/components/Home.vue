@@ -1,6 +1,7 @@
 <template>
     <div class = "home">
       <keeps></keeps>
+      <vaults></vaults>
       <!-- <div class="row public-keeps">
         <div v-for="keep in keeps" class="col-sm-4" :key="keep.id">
          <vaults v-show="false"></vaults>

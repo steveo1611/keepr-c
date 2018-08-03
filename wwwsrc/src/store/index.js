@@ -17,6 +17,7 @@ export default new vuex.Store({
   state: {
     user: {},
     keeps: [],
+    keep:{},
     vaults: [],
     vaultKeep: [],
     keepView: {},
@@ -27,10 +28,12 @@ export default new vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
-    setKeeps(state, keeps) {
-      debugger
-      state.keeps = keeps;
+    setKeep(state, keep) {
+     state.keep = keep;
     },
+    setKeeps(state, keeps) {
+      state.keeps = keeps;
+     },
     setVaults(state, vaults) {
       state.vaults = vaults;
     },
@@ -109,11 +112,12 @@ export default new vuex.Store({
           console.log(res.data);
         });
     },
-    createKeeps({ dispatch, commit }, payload) {
+    createKeep({ dispatch, commit }, payload) {
       server
         .post("/api/keeps", payload)
         .then(res => {
-          commit("setKeeps", payload);
+          commit("setKeep", payload);
+          dispatch('usercreatedkeeps')
           console.log('success')
         })
         .catch(res => {
